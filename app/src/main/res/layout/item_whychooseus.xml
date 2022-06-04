@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five"
+    android:layout_marginRight="@dimen/five"
+    android:layout_marginBottom="@dimen/five"
+    android:orientation="vertical">
+
+    <TextView
+        android:fontFamily="@font/ubuntu_light"
+        android:id="@+id/item_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="01"
+        android:visibility="gone"
+        android:textColor="@color/leaf_brown"
+        android:textSize="@dimen/ts_seventeen"
+        android:textStyle="bold" />
+
+    <TextView
+        android:fontFamily="@font/ubuntu_light"
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:background="@color/leaf_green"
+        android:gravity="center"
+        android:padding="@dimen/five"
+        android:text="SDT"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
+
+

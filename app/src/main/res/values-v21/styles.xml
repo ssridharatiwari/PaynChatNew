@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="textviewstyle">
+        <item name="android:background">@drawable/textviewstyle</item>
+        <item name="android:padding">@dimen/three</item>
+        <item name="android:textColor">@color/fontcolortextview</item>
+        <item name="android:textSize">@dimen/ts_forteen</item>
+    </style>
+
+    <style name="textviewstylebold">
+        <item name="android:background">@drawable/textviewstyle</item>
+        <item name="android:padding">@dimen/three</item>
+        <item name="android:textColor">@color/fontcolortextview</item>
+        <item name="android:textSize">@dimen/ts_fifteen</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="edittextstyle">
+        <item name="android:background">@drawable/edittextstyle</item>
+        <item name="android:paddingLeft">@dimen/five</item>
+        <item name="android:paddingTop">@dimen/three</item>
+        <item name="android:paddingRight">@dimen/five</item>
+        <item name="android:paddingBottom">@dimen/three</item>
+        <item name="android:height">45dp</item>
+        <item name="android:textColor">@color/fontcoloreditext</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>

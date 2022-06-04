@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.startup.paynchat.activities.SignInActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:padding="8dp">
+
+            <RelativeLayout
+                android:id="@+id/toolbarContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp">
+
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_round_arrow_back_24"
+                    app:tint="#fff" />
+
+                <TextView
+                    style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/app_name"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/users_image"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/profile"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo_text_new" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phoneNumber"
+                android:layout_marginTop="15dp"
+                android:text="Fill details to better known your us your query/problem. We will contact you soon"
+                android:textSize="20sp"
+                android:textColor="@color/leaf_brown" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forty"
+                android:layout_below="@+id/phoneNumber"
+                android:layout_marginTop="@dimen/thirty"
+                android:background="@drawable/edittextstyle"
+                android:hint="@string/hint_name"
+                android:inputType="text"
+                android:textColorHint="@color/brown_200"
+                android:textColor="@color/leaf_brown"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@color/transparent" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forty"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@drawable/edittextstyle"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColorHint="@color/brown_200"
+                android:paddingLeft="10dp"
+                android:textColor="@color/leaf_brown"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@color/transparent" />
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forty"
+                android:background="@drawable/edittextstyle"
+                android:hint="Your Age"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColorHint="@color/brown_200"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@color/transparent" />
+
+            <EditText
+                android:id="@+id/query"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hundred"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@drawable/edittextstyle"
+                android:gravity="left"
+                android:textColorHint="@color/brown_200"
+                android:hint="Enter Query/problem"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="@dimen/ten"
+                android:textColor="@color/leaf_brown"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/phoneNumber"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/thirty"
+                android:background="@drawable/round_blue"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                android:text="Submit Your Query"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        app:cardCornerRadius="@dimen/seven"
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/onetwentyfive"
+        app:cardBackgroundColor="@color/leaf_brown"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/discount"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/ubuntu_light"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:background="@color/leaf_green"
+                android:text="17% off"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/ts_seventeen"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                app:cardBackgroundColor="@color/leaf_brown"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_coin"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="@dimen/forty"
+                        android:layout_height="@dimen/forty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/diamond"/>
+
+
+                    <TextView
+                        android:id="@+id/pkg_price_coins"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:textSize="@dimen/ts_fifteen"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:text="145"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/pkg_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:layout_marginTop="@dimen/five"
+                        android:background="@color/darkGreen"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Rs 299/-"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/ts_seventeen"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_plans"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/five"
+                android:clipToPadding="false"
+                android:layout_marginTop="@dimen/ten"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_our_plans" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

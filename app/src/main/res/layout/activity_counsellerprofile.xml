@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:edMenuBackground="@color/colorBgDrawer"
+    app:edMenuSize="260dp"
+    app:edPosition="1">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:padding="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/toolbarContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp">
+
+                    <ImageView
+                        android:id="@+id/back_button"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_round_arrow_back_24"
+                        app:tint="#fff" />
+
+                    <TextView
+                        style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Expert Profile"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/users_image"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/setting"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/fifty">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="-25dp"
+                        android:elevation="@dimen/twentyfive"
+                        app:cardBackgroundColor="@color/transparent"
+                        app:cardCornerRadius="@dimen/twentyfive">
+
+                        <ImageView
+                            android:id="@+id/img_avatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/threehundredfifty"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:elevation="8dp"
+                            android:foregroundGravity="center"
+                            android:scaleType="fitXY"
+                            android:translationZ="70dp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/card_img"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:paddingBottom="@dimen/thirtyfive">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/lay_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginEnd="18dp"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/ten"
+                                android:orientation="vertical">
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/ten"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/age"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:gravity="center_vertical"
+                                        android:textColor="@color/leaf_brown"
+                                        android:textSize="@dimen/ts_fifteen"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:layout_width="@dimen/twenty"
+                                        android:layout_height="@dimen/twenty"
+                                        android:layout_toLeftOf="@+id/call_rate"
+                                        android:src="@drawable/diamond" />
+
+                                    <TextView
+                                        android:id="@+id/call_rate"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:gravity="center_vertical"
+                                        android:textColor="@color/leaf_brown"
+                                        android:textSize="@dimen/ts_fifteen"
+                                        android:textStyle="bold" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tv_username"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="@dimen/ts_twentyfive"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_role"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="@dimen/ts_twenty"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/tv_status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/seven"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="About"
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="@dimen/ts_twenty"
+                                    android:textStyle="bold" />
+
+
+                                <TextView
+                                    android:id="@+id/tv_about"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:gravity="center_horizontal"
+                                    android:text=""
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="18sp" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fifteen"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="Interests"
+                                    android:textColor="@color/leaf_brown"
+                                    android:textSize="@dimen/ts_twenty"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/seven">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginRight="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Music"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:layout_marginRight="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Dancing"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Gardening"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/seven">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginRight="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Designing"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:layout_marginRight="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Art"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/five"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/back_menu_cat"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:foregroundGravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/fifteen"
+                                        android:paddingTop="@dimen/seven"
+                                        android:paddingRight="@dimen/fifteen"
+                                        android:paddingBottom="@dimen/seven"
+                                        android:text="Dancing"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twentyfive"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:gravity="center_horizontal"
+                                        android:text="Clients Rating\n4.7"
+                                        android:textColor="@color/leaf_brown"
+                                        android:textSize="@dimen/ts_seventeen" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/ubuntu_light"
+                                        android:gravity="center_horizontal"
+                                        android:text="App Rating\n4.5"
+                                        android:textColor="@color/leaf_brown"
+                                        android:textSize="@dimen/ts_seventeen" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_marginBottom="@dimen/five"
+        android:background="@color/transparent"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/lay_connect"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seventyfive"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/img_audio"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/call_gif" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/img_call"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/video_gif" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/img_chat"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/sms_gif" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

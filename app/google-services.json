@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "441211890643",
+    "firebase_url": "https://paynchat-549a3-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "paynchat-549a3",
+    "storage_bucket": "paynchat-549a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441211890643:android:f9fb8827e827f4ca8f9d26",
+        "android_client_info": {
+          "package_name": "com.startup.paynchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441211890643-l932ccf3071naosfka7hr45g89rsidop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startup.paynchat",
+            "certificate_hash": "a15eccfb08d724c266ef9b18a98ea6de77b8e026"
+          }
+        },
+        {
+          "client_id": "441211890643-b1e1m7kodvq2ofng00dk4k774i553bm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZskXmNvusm7_uwATxp-_7A2zr6tgJWFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441211890643-b1e1m7kodvq2ofng00dk4k774i553bm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

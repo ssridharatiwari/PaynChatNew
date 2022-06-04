@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/headlayout"
+    android:background="@drawable/back_background"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/ten">
+
+    <RelativeLayout
+        android:id="@+id/ll_intrest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fifty"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_intrest"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/threehundredfifty"
+            android:padding="@dimen/thirty"
+            android:scaleType="fitXY"
+            android:src="@drawable/celebrate" />
+
+        <TextView
+            android:id="@+id/tv_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_intrest"
+            android:gravity="center"
+            android:text="You Are"
+            android:fontFamily="@font/ubuntu_light"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_eighteen" />
+
+        <TextView
+            android:id="@+id/tv_intrest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_light"
+            android:layout_below="@+id/tv_choose"
+            android:gravity="center"
+            android:text="Done"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ts_fifty"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fortyfive"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
+        android:background="@drawable/back_button_dark"
+        android:text="Let's Start"
+        android:textColor="@color/white" />
+</RelativeLayout>

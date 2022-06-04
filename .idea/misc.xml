@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_background.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_background_light.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_button.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_button_dark.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_lay_dark_bottom.xml" value="0.125" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_lay_dark_header.xml" value="0.1695" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_light_background.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_menu_cat.xml" value="0.2415" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_menu_category.xml" value="0.125" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_subcribe_plans.xml" value="0.2405" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/btn_rounded_red.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/edittextstyle.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/ic_people_white_24dp.xml" value="0.2405" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/nonselecteditem_dot.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/selecteditem_dot.xml" value="0.281" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/act_intro.xml" value="0.33" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/act_letsstart.xml" value="0.17760416666666667" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/act_populatespinner.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_call_screen.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_chats.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_counsellerprofile.xml" value="0.25" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_fav.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_main_counsellor.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_main_old.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_sign_in_1.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_sign_in_2.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_sign_in_consultant.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_sign_in_coun.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_signin.xml" value="0.2712962962962963" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_splash.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_startscreen.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/activity_viewplans.xml" value="0.2814814814814815" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/content_main.xml" value="0.33" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/content_main_counsellor.xml" value="0.346875" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/content_main_old.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/fragment_options.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_contact_number.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_counsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_dashboard_counsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_dashboard_services.xml" value="0.5" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_history.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_media_summary.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_memberlist.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_menu_user.xml" value="0.33" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_menu_user_small.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_our_mainplans.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_our_plans.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/layout/item_slider_layout.xml" value="0.25" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/menu/bottom_navigation.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/drawable/ic_keyboard_arrow_right_white_24dp.xml" value="0.2115" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/drawable/vertical_gradient.xml" value="0.2115" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/act_populatespinner.xml" value="0.17760416666666667" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_call_screen.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_chats.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_counsellerprofile.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_counsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_counsellingform.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_image_viewer.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_incoming_call_screen.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_main_counsellor.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_main_old.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_otp.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_service.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_sign_in_1.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_sign_in_2.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_sign_in_consultant.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_sign_in_coun.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_signin.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_splash.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_startscreen.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_user_detail.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/activity_viewplans.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/adapter_item_log_call.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/adapter_item_user.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/content_main.xml" value="0.34564102564102567" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/content_main_counsellor.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/content_main_old.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/contentcounsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/counsellor_enquiries.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/dialog_v_card_detail.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/empty_view.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/footer_view.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_confirmation.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_counsellor.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_group_new.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_group_select_members.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_main_recycler.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_options.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_privacy.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_profile_edit.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_user_media.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_user_select.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/fragment_user_sub_media.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/image_slider_layout_item.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_contact_number.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_counsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_country_spinner.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_dashboard_counsellers.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_dashboard_services.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_history.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_media_summary.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_memberlist.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_menu_user.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_menu_user_invite.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_audio.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_contact.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_document.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_image.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_location.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_recording.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_attachment_video.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_notification.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_text.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_message_typing.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_not_found_layout.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_our_mainplans.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_our_plans.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_our_services.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_selected_user.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/item_whychooseus.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/partial_message_status_view.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/sheet_list.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/PaynChat/app/src/main/res/layout/spinner_row_item.xml" value="0.35104166666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

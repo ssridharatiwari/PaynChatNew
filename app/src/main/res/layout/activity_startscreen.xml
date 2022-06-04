@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/logo_top"
+            android:layout_width="210dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/hundred"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_below="@+id/logo_top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/seven"
+            android:src="@drawable/logo_text_new" />
+
+        <LinearLayout
+            android:id="@+id/lay_option"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/logo_text"
+            android:layout_marginTop="@dimen/thirtyfive"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lay_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twentyfive"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/twentyfive"
+                app:cardBackgroundColor="@color/leaf_green"
+                app:cardCornerRadius="@dimen/seven"
+                app:cardElevation="@dimen/ten">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="@dimen/fifteen"
+                        android:src="@drawable/user"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:clickable="false"
+                        android:text="User\nLogin"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lay_coun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twentyfive"
+                android:layout_marginTop="@dimen/twentyfive"
+                android:layout_marginRight="@dimen/twentyfive"
+                app:cardBackgroundColor="@color/leaf_green"
+                app:cardCornerRadius="@dimen/seven"
+                app:cardElevation="@dimen/ten">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="@dimen/fifteen"
+                        android:src="@drawable/counselor"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:clickable="false"
+                        android:text="Our Expert\nLogin"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/fifteen"
+        android:text="Find Your Life Partner"
+        android:textColor="@color/pale_black"
+        android:textSize="@dimen/ts_forteen" />
+</RelativeLayout>
