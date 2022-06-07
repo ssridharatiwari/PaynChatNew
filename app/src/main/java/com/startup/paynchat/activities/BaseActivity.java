@@ -83,20 +83,23 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
     }
 
     public boolean IsChatPurchased() {
+        IsPlanSubscribed("");
         return isChatActive;
     }
 
     public boolean IsAudioPurchased() {
+        IsPlanSubscribed("");
         return isAudioActive;
     }
 
     public boolean IsVideoPurchased() {
+        IsPlanSubscribed("");
         return isVideoActive;
     }
 
     public void OpenPurchaseActivity(Context context) {
         Intent svIntent = new Intent(context, ViewPlansActivity.class);
-        svIntent.putExtra("gotoform", "1");
+        svIntent.putExtra("gotoform", "0");
         context.startActivity(svIntent);
     }
 
@@ -249,13 +252,29 @@ public abstract class BaseActivity extends AppCompatActivity implements ServiceC
 
     //App TODO by  ssridhara
     //Make by default false
-    public static boolean isChatActive = false, isAudioActive = false, isVideoActive = false;
-//    public static boolean isChatActive = true, isAudioActive = true, isVideoActive = true;
+    public static boolean isChatActive = true, isAudioActive = true, isVideoActive = true;
     public static String audioData = "", videoData = "", chatData = "";
+
+    public static boolean IsPlanSubscribed(Context mContext) {
+        int walletBal = PreferenceConnector.readInteger(mContext, PreferenceConnector.WALLETBAL, 0);
+        if (walletBal <= 20) {
+            isChatActive = false;
+            isVideoActive = false;
+            isChatActive = false;
+
+            return false;
+        } else {
+            isChatActive = true;
+            isVideoActive = true;
+            isChatActive = true;
+
+            return true;
+        }
+    }
 
     public void IsPlanSubscribed(String id) {
         int walletBal = PreferenceConnector.readInteger(mContext, PreferenceConnector.WALLETBAL, 0);
-        if (walletBal <= 0) {
+        if (walletBal <= 20) {
             isChatActive = false;
             isVideoActive = false;
             isChatActive = false;

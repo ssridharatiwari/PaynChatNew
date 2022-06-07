@@ -11,7 +11,7 @@
     <string name="sinch_app_key">8bce007c-ad26-4f3f-82ce-d507ba839ac8</string>
     <string name="sinch_app_secret">UKoY2xogf02lfs97jPaI0Q==</string>
     <string name="sinch_app_environment">clientapi.sinch.com</string>
-    <string name="authority">Media</string>
+    <string name="authority">com.startup.paynchat</string>
 
     <string name="login_title">Verify Your Number</string>
     <string name="login_desc">Please enter your mobile number to receive a verification code.</string>

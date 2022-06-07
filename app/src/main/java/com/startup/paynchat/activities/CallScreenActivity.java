@@ -349,7 +349,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
             }
             if (call.getDetails().getDuration() >= maxCallMin) {
                 endCall();
-                Toast.makeText(mContext, "Plan expired", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Coin expired. Purchase coin", Toast.LENGTH_LONG).show();
             } else {
                 if (mCallDurationSecond%60 == 5) {
                     DeductAmount(GlobalVariables.ADDTRANSCATIONEVERYSECOND, "1");
@@ -574,11 +574,18 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
     }
 
     public static Intent newIntent(Context context, User user, String callId, String inOrOut, int callSecond) {
-        Intent intent = new Intent(context, CallScreenActivity.class);
-        CallScreenActivity.userCounsellor = user;
-        CallScreenActivity.userInOut = inOrOut;
-        CallScreenActivity.userCallId = callId;
-        CallScreenActivity.callSecond = callSecond;
-        return intent;
+        if (BaseActivity.IsPlanSubscribed(context)) {
+            Intent intent = new Intent(context, CallScreenActivity.class);
+            CallScreenActivity.userCounsellor = user;
+            CallScreenActivity.userInOut = inOrOut;
+            CallScreenActivity.userCallId = callId;
+            CallScreenActivity.callSecond = callSecond;
+            return intent;
+        }else{
+            Intent svIntent = new Intent(context, ViewPlansActivity.class);
+            svIntent.putExtra("gotoform", "0");
+            context.startActivity(svIntent);
+            return null;
+        }
     }
 }

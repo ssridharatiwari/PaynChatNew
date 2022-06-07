@@ -1,6 +1,5 @@
 package com.startup.paynchat.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,14 +9,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.razorpay.Checkout;
@@ -87,18 +84,22 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
             public void onResponse(String response) {
                 Log.d("response=====a====>>>>>", response);
                 try {
-                    JSONObject json = new JSONObject(response);
                     plansItem = new ArrayList<>();
-                    JSONArray jsonArray2 = json.getJSONArray("data");
-                    for (int j = 0; j < jsonArray2.length(); j++) {
-                        JSONObject jsonPlansData = jsonArray2.getJSONObject(j);
 
-                        String plan_id = jsonPlansData.getString("plan_id");
-                        String discount = jsonPlansData.getString("discount");
-                        String category = jsonPlansData.getString("coins");
-                        String price = jsonPlansData.getString("price");
+                    JSONObject json = new JSONObject(response);
+                    JSONArray all_packages = json.getJSONArray("all_packages");
+                    for(int all_packages_i = 0; all_packages_i < all_packages.length(); all_packages_i++){
+                        JSONObject all_packages_obj=all_packages.getJSONObject(all_packages_i);
+                        JSONArray data = all_packages_obj.getJSONArray("data");
+                        for(int data_i = 0; data_i < data.length(); data_i++){
+                            JSONObject jsonPlansData=data.getJSONObject(data_i);
+                            String plan_id = jsonPlansData.getString("plan_id");
+                            String discount = jsonPlansData.getString("discount");
+                            String category = jsonPlansData.getString("coins");
+                            String price = jsonPlansData.getString("price");
 
-                        plansItem.add(new PlansItemsModel(plan_id, discount, category, price));
+                            plansItem.add(new PlansItemsModel(plan_id, discount, category, price));
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -134,28 +135,18 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                         onBackPressed();
                     }
                     Toast.makeText(ViewPlansActivity.this, str_message, Toast.LENGTH_SHORT).show();
-
-//                    if (goBackToForm) {
-//                        Intent intent = new Intent(ViewPlansActivity.this, CousolingForm.class);
-//                        intent.putExtra("subcat_id", subcatId);
-//                        startActivity(intent);
-//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error", error.toString());
-            }
-        }) {
+        }, error -> Log.d("error", error.toString())) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("plan_id", plan_id);
                 params.put("user_id", PreferenceConnector.readString(getApplicationContext(), PreferenceConnector.LOGINEDUSERID, ""));
-                params.put("submit", "submit");
+                params.put("cr_dr", "CR");
+                params.put("amount", curAMount);
                 return params;
             }
 
@@ -181,10 +172,10 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
     }
 
     PlansItemsModel curModel;
-
+    private String curAMount;
     public void startPayment(PlansItemsModel model) {
-
         curModel = model;
+        curAMount = curModel.getPrice().replace("/-", "");
         String strRazorPayId = getString(R.string.razorpay_key_id);
         String strRazorPayKey = getString(R.string.razorpay_key_secret);
         Checkout co = new Checkout();
@@ -198,7 +189,7 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                 options.put("description", "Add Coins for " + (helper.getLoggedInUser()).getName());
                 options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
                 options.put("currency", "INR");
-                options.put("amount", (Integer.parseInt(model.getPrice().replace("/-", "")) * 100) + "");
+                options.put("amount", (Integer.parseInt(curAMount) * 100) + "");
 
                 JSONObject preFill = new JSONObject();
                 preFill.put("email", "");

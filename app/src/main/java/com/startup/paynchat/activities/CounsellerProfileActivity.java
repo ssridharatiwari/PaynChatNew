@@ -125,7 +125,7 @@ public class CounsellerProfileActivity extends BaseActivity implements View.OnCl
                     setUserInfoApi(data_obj);
 
                     if ((data_obj.getString("live_status")).equalsIgnoreCase("Offline")) {
-                        isOnline = true;
+                        isOnline = false;
                     } else {
                         isOnline = true;
                     }
@@ -206,44 +206,59 @@ public class CounsellerProfileActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.img_call:
-                if (isOnline) {
-                    if (user != null) {
-                        callIsVideo = true;
-                        placeCall();
+                IsPlanSubscribed("");
+                if (isVideoActive) {
+                    if (isOnline) {
+                        if (user != null) {
+                            callIsVideo = true;
+                            placeCall();
+                        } else {
+                            Toast.makeText(mContext, R.string.just_moment, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(mContext, R.string.just_moment, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
+                }else{
+                    OpenPurchaseActivity(mContext);
                 }
                 break;
             case R.id.img_audio:
-                if (isOnline) {
-                    if (user != null) {
-                        callIsVideo = false;
-                        placeCall();
+                IsPlanSubscribed("");
+                if (isAudioActive) {
+                    if (isOnline) {
+                        if (user != null) {
+                            callIsVideo = false;
+                            placeCall();
+                        } else {
+                            Toast.makeText(mContext, R.string.just_moment, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(mContext, R.string.just_moment, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
+                }else{
+                    OpenPurchaseActivity(mContext);
                 }
                 break;
             case R.id.img_chat:
-                if (isOnline) {
-                    if (chat.isGroup() && chat.isLatest()) {
-                        ArrayList<Message> newGroupForwardList = new ArrayList<>();
-                        Message newMessage = new Message();
-                        newMessage.setBody(getString(R.string.invitation_group));
-                        newMessage.setAttachmentType(AttachmentTypes.NONE_NOTIFICATION);
-                        newMessage.setAttachment(null);
-                        newGroupForwardList.add(newMessage);
-                        openChat(ChatActivity.newIntent(mContext, newGroupForwardList, chat), null);
+                IsPlanSubscribed("");
+                if (isChatActive) {
+                    if (isOnline) {
+                        if (chat.isGroup() && chat.isLatest()) {
+                            ArrayList<Message> newGroupForwardList = new ArrayList<>();
+                            Message newMessage = new Message();
+                            newMessage.setBody(getString(R.string.invitation_group));
+                            newMessage.setAttachmentType(AttachmentTypes.NONE_NOTIFICATION);
+                            newMessage.setAttachment(null);
+                            newGroupForwardList.add(newMessage);
+                            openChat(ChatActivity.newIntent(mContext, newGroupForwardList, chat), null);
+                        } else {
+                            openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), null);
+                        }
                     } else {
-                        openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), null);
+                        Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(mContext, "Counsellor is offline", Toast.LENGTH_SHORT).show();
+                }else{
+                    OpenPurchaseActivity(mContext);
                 }
                 break;
             default:
@@ -447,7 +462,6 @@ public class CounsellerProfileActivity extends BaseActivity implements View.OnCl
                 CALLTIMEINSEC = GetMAxCallingInSec(
                         PreferenceConnector.readInteger(mContext, PreferenceConnector.WALLETBAL, 0),
                         CALLRATE);
-                Toast.makeText(mContext, "Remaining Sec" + CALLTIMEINSEC, Toast.LENGTH_LONG).show();
                 startActivity(CallScreenActivity.newIntent(this, user, callId, "OUT", CALLTIMEINSEC));
             } catch (Exception e) {
                 Log.e("CHECK", e.getMessage());
