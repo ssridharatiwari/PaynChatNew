@@ -9,7 +9,7 @@
     app:edMenuBackground="@color/pale_yellow"
     app:edMenuSize="260dp"
     app:edPosition="1">
-e
+
     <ImageView
         android:id="@+id/cross_button"
         android:layout_width="36dp"
@@ -154,7 +154,6 @@ e
                         android:textStyle="normal" />
                 </LinearLayout>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_services"
                     android:layout_width="match_parent"
@@ -176,9 +175,8 @@ e
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="normal"
         tools:text="@tools:sample/lorem" />

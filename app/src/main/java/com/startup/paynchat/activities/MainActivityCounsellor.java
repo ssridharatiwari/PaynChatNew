@@ -623,6 +623,11 @@ public class MainActivityCounsellor extends BaseActivity implements ChatItemClic
         }
     }
 
+    @Override
+    public void makeFav(boolean callIsVideo, User user) {
+
+    }
+
 //    private void myUsersResult(ArrayList<User> myUsers) {
 //        this.myUsers.clear();
 //        this.myUsers.addAll(myUsers);

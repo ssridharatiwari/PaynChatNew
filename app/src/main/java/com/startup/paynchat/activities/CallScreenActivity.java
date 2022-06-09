@@ -8,11 +8,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -34,6 +38,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.startup.paynchat.GlobalVariables;
+import com.startup.paynchat.adapters.MenuUsersRecyclerAdapter;
 import com.startup.paynchat.utils.PreferenceConnector;
 import com.sinch.android.rtc.AudioController;
 import com.sinch.android.rtc.PushPair;
@@ -51,6 +56,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +71,6 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
     public static String userInOut = "";
     public static String userCallId = "";
     public static int callSecond;
-    public static String counsellorId;
     private static String EXTRA_DATA_USER = "extradatauser";
     private static String EXTRA_DATA_IN_OR_OUT = "extradatainorout";
 
@@ -73,7 +78,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
     private Timer mTimer;
     private UpdateCallDurationTask mDurationTask;
     public static User userCounsellor;
-    private int maxCallMin;
+    private int maxCallSec;
     private String mCallId, inOrOut;
     private boolean mAddedListener, mLocalVideoViewAdded, mRemoteVideoViewAdded, isVideo, isMute, isSpeaker, alphaInvisible, logSaved;
     private int mCallDurationSecond = 0;
@@ -165,7 +170,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
         user = userCounsellor;
         inOrOut = userInOut;
         mCallId = userCallId;
-        maxCallMin = callSecond;
+        maxCallSec = callSecond;
 //        user = (User)intent.getParcelableExtra(EXTRA_DATA_USER);
 //        mCallId = (String)intent.getStringExtra(SinchService.CALL_ID);
 //        inOrOut = (String)intent.getStringExtra(EXTRA_DATA_IN_OR_OUT);
@@ -227,7 +232,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
         switchVideo.setClickable(false);
 
 
-        if (! user.isCounsellor()) {
+        if (!user.isCounsellor()) {
             if (isVideo) {
                 if (!IsVideoPurchased()) {
                     OpenPurchaseActivity(this);
@@ -291,8 +296,8 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
 
     private void saveLog() {
         if (!logSaved) {
-            if (isCallStart){
-                DeductAmount(GlobalVariables.ADDTRANSCATION, mCallDurationSecond+"");
+            if (isCallStart) {
+                DeductAmount(GlobalVariables.ADDTRANSCATION, mCallDurationSecond + "");
                 isCallStart = false;
             }
 
@@ -344,52 +349,60 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
     private void updateCallDuration() {
         Call call = getSinchServiceInterface().getCall(mCallId);
         if (call != null) {
-            if (call.getDetails().getDuration() >= 5){
+            if (call.getDetails().getDuration() >= 5) {
                 isCallStart = true;
             }
-            if (call.getDetails().getDuration() >= maxCallMin) {
+            if (call.getDetails().getDuration() >= maxCallSec) {
                 endCall();
                 Toast.makeText(mContext, "Coin expired. Purchase coin", Toast.LENGTH_LONG).show();
             } else {
-                if (mCallDurationSecond%60 == 5) {
-                    DeductAmount(GlobalVariables.ADDTRANSCATIONEVERYSECOND, "1");
-                }
                 mCallDurationSecond = call.getDetails().getDuration();
                 mCallDuration.setText(formatTimespan(call.getDetails().getDuration()));
+            }
+
+
+            if (mCallDurationSecond % 60 == 5) {
+                DeductAmount(GlobalVariables.ADDTRANSCATIONEVERYSECOND, "1");
             }
         }
     }
 
+    private boolean isCallAPi = true;
     private void DeductAmount(String POSTURL, String duration) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + POSTURL, new Response.Listener<String>() {
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onResponse(String response) {
+            public void run() {
+                isCallAPi = true;
+            }
+        }, 3000);
 
-            }
-        }, error -> Log.d("error", error.toString())) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("user_id", PreferenceConnector.readString(mContext, PreferenceConnector.LOGINEDPHONE, ""));
-                params.put("duration", duration);
-                params.put("counselors", CallScreenActivity.counsellorId);
-                return params;
-            }
+        if (isCallAPi) {
+            isCallAPi = false;
+            RequestQueue queue = Volley.newRequestQueue(this);
+            StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + POSTURL, response -> Log.d("response=====api>>>>>", response + "......." + GlobalVariables.PREURL + POSTURL), error -> Log.d("error", error.toString() + GlobalVariables.PREURL + POSTURL)) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("user_id", PreferenceConnector.readString(mContext, PreferenceConnector.LOGINEDUSERID, ""));
+                    params.put("duration", duration);
+                    params.put("counselors", (CallScreenActivity.userCounsellor).getUserId());
+                    return params;
+                }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                return params;
-            }
-        };
-        queue.add(request);
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(request);
+        }
     }
 
     @Override
     void onSinchConnected() {
-        Log.e(".....mCallId-------", mCallId);
         Call call = getSinchServiceInterface().getCall(mCallId);
         if (call != null) {
             if (!mAddedListener) {
@@ -581,7 +594,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
             CallScreenActivity.userCallId = callId;
             CallScreenActivity.callSecond = callSecond;
             return intent;
-        }else{
+        } else {
             Intent svIntent = new Intent(context, ViewPlansActivity.class);
             svIntent.putExtra("gotoform", "0");
             context.startActivity(svIntent);

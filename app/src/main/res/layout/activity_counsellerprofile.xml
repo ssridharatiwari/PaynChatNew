@@ -408,12 +408,12 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <pl.droidsonroids.gif.GifImageView
+                <ImageView
                     android:id="@+id/img_audio"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
                     android:layout_gravity="center"
-                    android:src="@drawable/call_gif" />
+                    android:src="@drawable/audio_call_btn_front" />
             </RelativeLayout>
 
 
@@ -423,12 +423,12 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <pl.droidsonroids.gif.GifImageView
+                <ImageView
                     android:id="@+id/img_call"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
                     android:layout_gravity="center"
-                    android:src="@drawable/video_gif" />
+                    android:src="@drawable/video_call_btn_front" />
 
             </RelativeLayout>
 
@@ -439,12 +439,12 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <pl.droidsonroids.gif.GifImageView
+                <ImageView
                     android:id="@+id/img_chat"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
                     android:layout_gravity="center"
-                    android:src="@drawable/sms_gif" />
+                    android:src="@drawable/chat_btn" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

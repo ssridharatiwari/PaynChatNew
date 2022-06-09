@@ -72,19 +72,21 @@
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
+                android:visibility="gone"
                 tools:itemCount="10"
                 tools:listitem="@layout/item_menu_user" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/txt_nodata"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:text="Why Choose Us"
+                android:layout_marginTop="25dp"
+                android:text="not found"
+                android:layout_gravity="center"
                 android:textColor="@color/leaf_brown"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_whychooseus"

@@ -11,6 +11,7 @@ import com.google.firebase.database.Exclude;
 
 public class User implements Parcelable {
     private boolean online;
+    private boolean isFavaraite;
     private boolean typing;
     private String age, call_rate;
     @Exclude
@@ -24,6 +25,14 @@ public class User implements Parcelable {
 
     public String getAge() {
         return age;
+    }
+
+    public boolean isFavaraite() {
+        return isFavaraite;
+    }
+
+    public void setFavaraite(boolean favaraite) {
+        isFavaraite = favaraite;
     }
 
     public void setAge(String age) {
@@ -94,7 +103,7 @@ public class User implements Parcelable {
         this.isCounsellor = false;
     }
 
-    public User(String id, String name, String status, String image, String userId, String age, String call_rate) {
+    public User(String id, String name, String status, String image, String userId, String age, String call_rate, boolean isFavaraite) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -103,6 +112,7 @@ public class User implements Parcelable {
         this.userId = userId;
         this.age = age;
         this.call_rate = call_rate;
+        this.isFavaraite = isFavaraite;
         this.typing = false;
         this.inviteAble = false;
         this.isCounsellor = false;

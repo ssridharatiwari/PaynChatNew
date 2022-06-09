@@ -545,6 +545,49 @@ public class MainActivity extends BaseActivity implements ChatItemClickListener,
         }
     }
 
+    @Override
+    public void makeFav(boolean callIsVideo, User user) {
+        ShowProgressDialog("Loading", "Loading Data");
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.MAKEWISHLIST, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response==========>>>>>", response);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String str_message = json.getString("message");
+                    String str_result = json.getString("result");
+
+                    if (str_result.equalsIgnoreCase("true")) {
+                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                HideProgressDialog();
+            }
+        }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", PreferenceConnector.readString(mContext, PreferenceConnector.LOGINEDUSERID, ""));
+                params.put("lowyer_id", user.getUserId());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
 //    private void myUsersResult(ArrayList<User> myUsers) {
 //        this.myUsers.clear();
 //        this.myUsers.addAll(myUsers);

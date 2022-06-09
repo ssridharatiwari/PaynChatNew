@@ -6,66 +6,45 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.onesignal.OSPermissionSubscriptionState;
-import com.onesignal.OneSignal;
-import com.sinch.android.rtc.calling.Call;
 import com.startup.paynchat.GlobalVariables;
 import com.startup.paynchat.R;
-import com.startup.paynchat.adapters.HomeAdapter;
 import com.startup.paynchat.adapters.MenuUsersRecyclerAdapter;
-import com.startup.paynchat.adapters.ViewPagerAdapter;
-import com.startup.paynchat.adapters.WhyChooseUsAdapter;
-import com.startup.paynchat.fragments.MyCallsFragment;
-import com.startup.paynchat.fragments.MyChatsFragment;
-import com.startup.paynchat.fragments.OptionsFragment;
-import com.startup.paynchat.fragments.ProfileEditDialogFragment;
 import com.startup.paynchat.fragments.UserSelectDialogFragment;
 import com.startup.paynchat.interfaces.ChatItemClickListener;
-import com.startup.paynchat.models.CategoryModel;
 import com.startup.paynchat.models.Chat;
 import com.startup.paynchat.models.Message;
 import com.startup.paynchat.models.User;
-import com.startup.paynchat.services.FetchMyUsersService;
 import com.startup.paynchat.utils.Helper;
+import com.startup.paynchat.utils.PreferenceConnector;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FavoraiteActivity extends BaseActivity implements ChatItemClickListener, View.OnClickListener {
+public class FavoraiteActivity extends AppCompatActivity implements ChatItemClickListener, View.OnClickListener {
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private final int CONTACTS_REQUEST_CODE = 321;
     private static String USER_SELECT_TAG = "userselectdialog";
@@ -73,23 +52,21 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
     private static String PROFILE_EDIT_TAG = "profileedittag";
     private static String GROUP_CREATE_TAG = "groupcreatedialog";
     private static String CONFIRM_TAG = "confirmtag";
-    private ImageView vipMembership, backImage, dialogUserImage;
-    private RelativeLayout toolbarContainer;
-
+    private ImageView vipMembership, backImage;
     private MenuUsersRecyclerAdapter menuUsersRecyclerAdapter;
     private ArrayList<User> myUsers = new ArrayList<>();
     private ArrayList<Message> messageForwardList = new ArrayList<>();
     private UserSelectDialogFragment userSelectDialogFragment;
-    private DatabaseReference myInboxRef;
-    private ViewPagerAdapter adapter;
+    private Context mContext;
+    private TextView txtNoData;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         initUi();
         setupMenu();
-        LoadBanner();
-        initBottomMenu();
         setProfileImage();
         vipMembership.setOnClickListener(this);
         backImage.setOnClickListener(this);
@@ -102,81 +79,6 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
             Helper.closeKeyboard(this, view18);
             onBackPressed();
         });
-
-
-        updateFcmToken();
-
-        boolean newUser = getIntent().getBooleanExtra("newUser", false);
-        if (newUser && userMe != null) {
-            Toast.makeText(mContext, R.string.setup_profile_msg, Toast.LENGTH_LONG).show();
-            ProfileEditDialogFragment.newInstance(true).show(getSupportFragmentManager(), PROFILE_EDIT_TAG);
-        }
-
-        LoadWhyChooseUs();
-    }
-
-    private List<CategoryModel> items = new ArrayList<>();
-    private void LoadServices() {
-        items = new ArrayList<>();
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.GETCATEGORY, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("response==========>>>>>", response);
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String str_message = json.getString("message");
-                    String str_result = json.getString("result");
-
-                    if (str_result.equalsIgnoreCase("true")) {
-                        JSONArray data = json.getJSONArray("data");
-                        for (int data_i = 0; data_i < ((JSONArray) data).length(); data_i++) {
-                            JSONObject data_obj = data.getJSONObject(data_i);
-
-                            //{"result":true,"message":"data found","data":[{"id":"5","category":"Legal Advice"}]}
-                            String id = data_obj.getString("id");
-                            String category = data_obj.getString("category");
-
-                            int drawable;
-                            drawable = R.drawable.girl;
-                            items.add(new CategoryModel(drawable, id, category, ""));
-                        }
-                    } else {
-                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                HomeAdapter mAdapter = new HomeAdapter(FavoraiteActivity.this, items);
-                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_services);
-                recyclerView.setLayoutManager(new LinearLayoutManager(FavoraiteActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, CategoryModel obj, int position) {
-                        Intent intent = new Intent(FavoraiteActivity.this, ServiceActivity.class);
-                        intent.putExtra("serviceid", obj.getId());
-                        intent.putExtra("servicename", obj.getCategory());
-                        startActivity(intent);
-                    }
-                });
-
-                HideProgressDialog();
-            }
-        }, error -> Log.d("error", error.toString()));
-        queue.add(request);
-    }
-
-    private void LoadBanner() {
-        ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
-
-        imageList.add(new SlideModel(R.drawable.banner, ScaleTypes.FIT));
-        imageList.add(new SlideModel(R.drawable.banner_two, ScaleTypes.FIT));
-
-        ImageSlider imageSlider = findViewById(R.id.image_slider);
-        imageSlider.setImageList(imageList);
     }
 
     @Override
@@ -197,127 +99,83 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
 
     private void initUi() {
         setContentView(R.layout.activity_fav);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_counsellers);
         vipMembership = findViewById(R.id.users_image);
-        toolbarContainer = findViewById(R.id.toolbarContainer);
         backImage = findViewById(R.id.back_button);
-
-    }
-
-    private void updateFcmToken() {
-        OneSignal.addSubscriptionObserver(stateChanges -> {
-            if (!stateChanges.getFrom().getSubscribed() && stateChanges.getTo().getSubscribed()) {
-                usersRef.child(userMe.getId()).child("userPlayerId").setValue(stateChanges.getTo().getUserId());
-                helper.setMyPlayerId(stateChanges.getTo().getUserId());
-            }
-        });
-        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
-        if (status != null && status.getSubscriptionStatus() != null && status.getSubscriptionStatus().getUserId() != null) {
-            usersRef.child(userMe.getId()).child("userPlayerId").setValue(status.getSubscriptionStatus().getUserId());
-            helper.setMyPlayerId(status.getSubscriptionStatus().getUserId());
-        }
-        usersRef.child(userMe.getId()).child("userPlayerId").setValue(OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
-    }
-
-    private void setupViewPager() {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(MyChatsFragment.newInstance(false), getString(R.string.tab_title_chat));
-        adapter.addFrag(MyChatsFragment.newInstance(true), getString(R.string.tab_title_group));
-        adapter.addFrag(new MyCallsFragment(), getString(R.string.tab_title_call));
-    }
-
-    private void reduceMarginsInTabs(TabLayout tabLayout, int marginOffset) {
-        View tabStrip = tabLayout.getChildAt(0);
-        if (tabStrip instanceof ViewGroup) {
-            ViewGroup tabStripGroup = (ViewGroup) tabStrip;
-            for (int i = 0; i < ((ViewGroup) tabStrip).getChildCount(); i++) {
-                View tabView = tabStripGroup.getChildAt(i);
-                if (tabView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-                    ((ViewGroup.MarginLayoutParams) tabView.getLayoutParams()).leftMargin = marginOffset;
-                    ((ViewGroup.MarginLayoutParams) tabView.getLayoutParams()).rightMargin = marginOffset;
-                }
-            }
-
-            tabLayout.requestLayout();
-        }
+        txtNoData = findViewById(R.id.txt_nodata);
     }
 
     private void setupMenu() {
         ShowProgressDialog("Loading", "Loading Data");
         myUsers = new ArrayList<>();
-        if (counsellerList.size() == 0) {
-            ArrayList<User> mcounsellerList = new ArrayList<>();
-            RequestQueue queue = Volley.newRequestQueue(this);
-            StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.GETCONSELLORLIST, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("response==========>>>>>", response);
-                    try {
-                        JSONObject json = new JSONObject(response);
-                        String str_message = json.getString("message");
-                        String str_result = json.getString("result");
+        ArrayList<User> mcounsellerList = new ArrayList<>();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.GETWISHLISTCONSELLORLIST, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response==========>>>>>", response);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String str_message = json.getString("message");
+                    String str_result = json.getString("result");
 
-                        if (str_result.equalsIgnoreCase("true")) {
-                            JSONArray data = json.getJSONArray("data");
-                            for (int data_i = 0; data_i < ((JSONArray) data).length(); data_i++) {
-                                JSONObject data_obj = data.getJSONObject(data_i);
-                                String imgUrl = "";
-                                if (data_obj.has("image")) {
-                                    imgUrl = GlobalVariables.IMGPREURL + data_obj.getString("image");
-                                } else {
-                                    imgUrl = "";
-                                }
-                                //{"result":true,"message":"data found","data":[{"id":"19","name":"Shridhar","contact":"+917691001989","address":null,"languages":null,"mail":"ssonu0001@gmail.com","experience":null,"about":null,"password":null,"image":null,"adhar_no":null,"adhar_img":null,"ac_holder":null,"ac_number":null,"bank":null,"other":null,"role":"lowyer","status":null,"created_at":null,"updated_at":null}]}
-                                mcounsellerList.add(new User(data_obj.getString("contact"), data_obj.getString("name"),
-                                        data_obj.getString("status"),
-                                        imgUrl,
-                                        data_obj.getString("id"), data_obj.getString("role")));
+                    if (str_result.equalsIgnoreCase("true")) {
+                        JSONArray data = json.getJSONArray("data");
+                        for (int data_i = 0; data_i < ((JSONArray) data).length(); data_i++) {
+                            JSONObject data_obj = data.getJSONObject(data_i);
+                            String imgUrl = "";
+                            if (data_obj.has("image")) {
+                                imgUrl = GlobalVariables.IMGPREURL + data_obj.getString("image");
+                            } else {
+                                imgUrl = "";
                             }
-                        } else {
-                            Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
+                            //{"result":true,"message":"data found","data":[{"id":"19","name":"Shridhar","contact":"+917691001989","address":null,"languages":null,"mail":"ssonu0001@gmail.com","experience":null,"about":null,"password":null,"image":null,"adhar_no":null,"adhar_img":null,"ac_holder":null,"ac_number":null,"bank":null,"other":null,"role":"lowyer","status":null,"created_at":null,"updated_at":null}]}
+                            mcounsellerList.add(new User(data_obj.getString("contact"), data_obj.getString("name"),
+                                    data_obj.getString("status"),
+                                    imgUrl,
+                                    data_obj.getString("id"), data_obj.getString("role")));
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                        myUsers = mcounsellerList;
+                        menuUsersRecyclerAdapter = new MenuUsersRecyclerAdapter(mContext, myUsers);
+
+
+                        recyclerView.setLayoutManager(new GridLayoutManager(FavoraiteActivity.this, 2));
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setAdapter(menuUsersRecyclerAdapter);
+
+                        recyclerView.setVisibility(View.VISIBLE);
+                        txtNoData.setVisibility(View.GONE);
+                    } else {
+                        txtNoData.setText(str_message);
+                        recyclerView.setVisibility(View.GONE);
+                        txtNoData.setVisibility(View.VISIBLE);
+//                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
                     }
-
-                    myUsers = mcounsellerList;
-                    menuUsersRecyclerAdapter = new MenuUsersRecyclerAdapter(mContext, myUsers);
-
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_counsellers);
-                    recyclerView.setLayoutManager(new GridLayoutManager(FavoraiteActivity.this, 2));
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(menuUsersRecyclerAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, error -> Log.d("error", error.toString()));
-            queue.add(request);
-        } else {
-            myUsers = counsellerList;
-            menuUsersRecyclerAdapter = new MenuUsersRecyclerAdapter(mContext, myUsers);
 
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_counsellers);
-            recyclerView.setLayoutManager(new GridLayoutManager(FavoraiteActivity.this, 2));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(menuUsersRecyclerAdapter);
-        }
-        LoadServices();
-    }
 
-    private void LoadWhyChooseUs() {
-        List<String> itemWhyChooseUs = new ArrayList<>();
-        itemWhyChooseUs.add("Save Your Time and Money");
-        itemWhyChooseUs.add("Save your Relationship");
-        itemWhyChooseUs.add("Secure and Confidential");
-        itemWhyChooseUs.add("5+ Years Experienced Experts");
-        itemWhyChooseUs.add("For going to Right Direction");
-        itemWhyChooseUs.add("For Mental Peace and Peaceful Resolution");
-        itemWhyChooseUs.add("Unlimited Conversations with Experts");
-        itemWhyChooseUs.add("Connect with a Verfied Psychologists and Attorney in Minutes");
-        itemWhyChooseUs.add("A team of experts Available on call 24x7");
-        WhyChooseUsAdapter mAdapter = new WhyChooseUsAdapter(this, itemWhyChooseUs);
+                HideProgressDialog();
+            }
+        }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", PreferenceConnector.readString(mContext, PreferenceConnector.LOGINEDUSERID, ""));
+                return params;
+            }
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_whychooseus);
-        recyclerView.setLayoutManager(new GridLayoutManager(FavoraiteActivity.this, 1));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mAdapter);
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        queue.add(request);
     }
 
     private void setProfileImage() {
@@ -333,33 +191,6 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
 //                refreshMyContacts();
                 break;
         }
-    }
-
-    private void refreshMyContacts() {
-//        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-        if (!FetchMyUsersService.STARTED) {
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (firebaseUser != null) {
-                firebaseUser.getIdToken(false).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        String idToken = task.getResult().getToken();
-                        FetchMyUsersService.startMyUsersService(FavoraiteActivity.this, userMe.getId(), idToken);
-                    }
-                });
-            }
-        }
-//        } else {
-//            FragmentManager manager = getSupportFragmentManager();
-//            ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newConfirmInstance(getString(R.string.permission_contact_title),
-//                    getString(R.string.permission_contact_message), getString(R.string.okay), getString(R.string.no),
-//                    view -> {
-//                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.READ_CONTACTS}, CONTACTS_REQUEST_CODE);
-//                    },
-//                    view -> {
-//                        finish();
-//                    });
-//            confirmationDialogFragment.show(manager, CONFIRM_TAG);
-//        }
     }
 
     @Override
@@ -389,40 +220,8 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
         }
     }
 
-    private void userUpdated() {
-        userMe = helper.getLoggedInUser();
-        setProfileImage();
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment frag = manager.findFragmentByTag(OPTIONS_MORE);
-        if (frag != null) {
-            ((OptionsFragment) frag).setUserDetails(userMe);
-        }
-    }
-
-    @Override
-    void onSinchConnected() {
-
-    }
-
-    @Override
-    void onSinchDisconnected() {
-
-    }
-
     @Override
     public void onChatItemClick(Chat chat, int position, View userImage) {
-//        if (chat.isGroup() && chat.isLatest()) {
-//            ArrayList<Message> newGroupForwardList = new ArrayList<>();
-//            Message newMessage = new Message();
-//            newMessage.setBody(getString(R.string.invitation_group));
-//            newMessage.setAttachmentType(AttachmentTypes.NONE_NOTIFICATION);
-//            newMessage.setAttachment(null);
-//            newGroupForwardList.add(newMessage);
-//            openChat(ChatActivity.newIntent(mContext, newGroupForwardList, chat), userImage);
-//        } else {
-//            openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), userImage);
-//        }
-
         startActivity(CounsellerProfileActivity.newIntent(mContext, chat));
     }
 
@@ -434,18 +233,6 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
     @Override
     public void onCallChat(boolean isVideoCall, User user) {
 
-    }
-
-    private void openChat(Intent intent, View userImage) {
-        if (userImage == null) {
-            userImage = vipMembership;
-        }
-
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, userImage, "userImage");
-        startActivityForResult(intent, REQUEST_CODE_CHAT_FORWARD, activityOptionsCompat.toBundle());
-
-        if (userSelectDialogFragment != null)
-            userSelectDialogFragment.dismiss();
     }
 
     @Override
@@ -463,52 +250,53 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
         }
     }
 
-    private void deleteChatsFromFirebase(ArrayList<String> chatIdsToDelete) {
-        for (String chatChild : chatIdsToDelete) {
-            myInboxRef.child(chatChild.startsWith(Helper.GROUP_PREFIX) ? chatChild : Helper.getUserIdFromChatChild(userMe.getId(), chatChild)).setValue(null);
-            ArrayList<Message> msgs = helper.getMessages(chatChild);
-            ArrayList<String> deletedMessages = helper.getMessagesDeleted(chatChild);
-            for (Message msg : msgs)
-                deletedMessages.add(msg.getId());
-            helper.setMessages(chatChild, new ArrayList<>());
-            helper.setMessagesDeleted(chatChild, deletedMessages);
-        }
+    @Override
+    public void placeCall(boolean callIsVideo, User user) {
     }
 
     @Override
-    public void placeCall(boolean callIsVideo, User user) {
-        if (permissionsAvailable(permissionsSinch)) {
-            try {
-                Call call = callIsVideo ? getSinchServiceInterface().callUserVideo(user.getId()) : getSinchServiceInterface().callUser(user.getId());
-                if (call == null) {
-                    // Service failed for some reason, show a Toast and abort
-                    Toast.makeText(mContext, R.string.sinch_start_error, Toast.LENGTH_LONG).show();
-                    return;
+    public void makeFav(boolean callIsVideo, User user) {
+        ShowProgressDialog("Loading", "Loading Data");
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.MAKEWISHLIST, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response==========>>>>>", response);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String str_message = json.getString("message");
+                    String str_result = json.getString("result");
+
+                    if (str_result.equalsIgnoreCase("true")) {
+                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, str_message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                String callId = call.getCallId();
-                startActivity(CallScreenActivity.newIntent(mContext, user, callId, "OUT", CallScreenActivity.MAXCALLTIMEINSEC));
-            } catch (Exception e) {
-                Log.e("CHECK", e.getMessage());
-                //ActivityCompat.requestPermissions(this, new String[]{e.getRequiredPermission()}, 0);
+
+                HideProgressDialog();
             }
-        } else {
-            ActivityCompat.requestPermissions(this, permissionsSinch, 69);
-        }
+        }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", PreferenceConnector.readString(mContext, PreferenceConnector.LOGINEDUSERID, ""));
+                params.put("lowyer_id", user.getUserId());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        queue.add(request);
     }
-
-//    private void myUsersResult(ArrayList<User> myUsers) {
-//        this.myUsers.clear();
-//        this.myUsers.addAll(myUsers);
-////        for (int i = 0; i<=myUsers.size(); i++){
-////            if (myUsers.get(i).isInviteAble()){
-////                myUsers.remove(i);
-////            }
-////        }
-//        //refreshUsers(-1);
-//        menuUsersRecyclerAdapter.notifyDataSetChanged();
-//        registerChatUpdates();
-//    }
-
 
     private ProgressDialog progressDialog;
 
@@ -527,38 +315,6 @@ public class FavoraiteActivity extends BaseActivity implements ChatItemClickList
         if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
 
-    }
-
-
-
-    private void initBottomMenu() {
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setItemIconTintList(null);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectFragment = null;
-                Intent svIntent;
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        svIntent = new Intent(FavoraiteActivity.this, FavoraiteActivity.class);
-                        startActivity(svIntent);
-                        break;
-                    case R.id.nav_fav:
-
-                        break;
-                    case R.id.nav_chatbox:
-                        svIntent = new Intent(FavoraiteActivity.this, MainActivityOld.class);
-                        startActivity(svIntent);
-                        break;
-                    case R.id.nav_setting:
-                        OptionsFragment.newInstance(getSinchServiceInterface()).show(getSupportFragmentManager(), OPTIONS_MORE);
-                        break;
-                }
-
-                return false;
-            }
-        });
     }
 
     public void switchContent(Fragment fragment) {

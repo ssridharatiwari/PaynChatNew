@@ -14,4 +14,5 @@ public interface ChatItemClickListener {
     void onMessageChat(Chat chat, int position, View userImage);
     void onCallChat(boolean isVideoCall, User user);
     void placeCall(boolean callIsVideo, User user);
+    void makeFav(boolean callIsVideo, User user);
 }

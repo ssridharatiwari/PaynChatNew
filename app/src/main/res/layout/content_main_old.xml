@@ -132,6 +132,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
         android:src="@drawable/ic_add"
-        android:visibility="gone"
+        android:visibility="visible"
         app:fabSize="normal" />
 </FrameLayout>

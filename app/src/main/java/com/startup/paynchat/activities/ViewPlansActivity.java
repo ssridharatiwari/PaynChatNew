@@ -69,7 +69,6 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         ((TextView)findViewById(R.id.txt_mygems)).setText("My Gems: "+PreferenceConnector.readInteger(this, PreferenceConnector.WALLETBAL, 0)+"");
 
         txtOurService.setText("Subscribe the plans according to your need");
-
         txtFooter.setText("Note* Please click on the plan to purchase Gems for your account");
     }
 
@@ -109,12 +108,9 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                 recyclerView.setLayoutManager(new GridLayoutManager(ViewPlansActivity.this, 3));
                 OurPlansAdapter mAdapter = new OurPlansAdapter(ViewPlansActivity.this, plansItem);
                 recyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new OurPlansAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, PlansItemsModel obj, int position) {
-                        plan_id = obj.getPlan_id();
-                        startPayment(obj);
-                    }
+                mAdapter.setOnItemClickListener((view, obj, position) -> {
+                    plan_id = obj.getPlan_id();
+                    startPayment(obj);
                 });
             }
         }, error -> Log.d("error", error.toString()));

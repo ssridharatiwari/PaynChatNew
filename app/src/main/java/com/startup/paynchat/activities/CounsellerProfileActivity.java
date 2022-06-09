@@ -63,7 +63,6 @@ public class CounsellerProfileActivity extends BaseActivity implements View.OnCl
     private String counsID = "";
 
     public static Intent newIntent(Context context, Chat chat) {
-        //intent contains user to chat with and message forward list if any.
         Intent intent = new Intent(context, CounsellerProfileActivity.class);
         intent.putExtra(EXTRA_DATA_CHAT, chat);
         return intent;
@@ -106,13 +105,26 @@ public class CounsellerProfileActivity extends BaseActivity implements View.OnCl
 
                     CounsellerProfileActivity.this.user = new User();
 //                    {"result":true,"message":"data found","data":[{"contact":"+919758844422","mail":"","role":"Psychologist","image":"\/images\/lowyer_images\/Nishaa roy_.jpg","status":"Active","live_status":"Offline"}]}
+
+                    String isFav = "0";
+                    boolean isFavaraite = false;
+                    if (data_obj.has("is_fav")) {
+                        isFav = data_obj.getString("is_fav");
+                    }
+                    if (isFav.equalsIgnoreCase("0")) {
+                        isFavaraite = false;
+                    }else {
+                        isFavaraite = true;
+                    }
+
                     CounsellerProfileActivity.this.user = new User(
                             data_obj.getString("contact"), data_obj.getString("name"),
                             "Online",
                             GlobalVariables.IMGPREURL + data_obj.getString("image"),
                             data_obj.getString("id"),
                             data_obj.getString("age"),
-                            data_obj.getString("call_rate"));
+                            data_obj.getString("call_rate"),
+                            isFavaraite);
 
                     try{
                         CALLRATE = Integer.parseInt(data_obj.getString("call_rate"));

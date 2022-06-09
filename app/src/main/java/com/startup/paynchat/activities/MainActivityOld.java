@@ -31,7 +31,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -60,7 +59,6 @@ import com.startup.paynchat.GlobalVariables;
 import com.startup.paynchat.R;
 import com.startup.paynchat.adapters.MenuUsersRecyclerAdapter;
 import com.startup.paynchat.adapters.ViewPagerAdapter;
-import com.startup.paynchat.fragments.GroupCreateDialogFragment;
 import com.startup.paynchat.fragments.MyCallsFragment;
 import com.startup.paynchat.fragments.MyChatsFragment;
 import com.startup.paynchat.fragments.OptionsFragment;
@@ -122,7 +120,7 @@ public class MainActivityOld extends BaseActivity implements ChatItemClickListen
             }
         }
     };
-    //    private BroadcastReceiver myUsersReceiver = new BroadcastReceiver() {
+//    private BroadcastReceiver myUsersReceiver = new BroadcastReceiver() {
 //        @Override
 //        public void onReceive(Context context, Intent intent) {
 //            ArrayList<User> myUsers = intent.getParcelableArrayListExtra("data");
@@ -555,17 +553,18 @@ public class MainActivityOld extends BaseActivity implements ChatItemClickListen
 
     @Override
     public void onChatItemClick(Chat chat, int position, View userImage) {
-        if (chat.isGroup() && chat.isLatest()) {
-            ArrayList<Message> newGroupForwardList = new ArrayList<>();
-            Message newMessage = new Message();
-            newMessage.setBody(getString(R.string.invitation_group));
-            newMessage.setAttachmentType(AttachmentTypes.NONE_NOTIFICATION);
-            newMessage.setAttachment(null);
-            newGroupForwardList.add(newMessage);
-            openChat(ChatActivity.newIntent(mContext, newGroupForwardList, chat), userImage);
-        } else {
-            openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), userImage);
-        }
+        startActivity(CounsellerProfileActivity.newIntent(mContext, chat));
+//        if (chat.isGroup() && chat.isLatest()) {
+//            ArrayList<Message> newGroupForwardList = new ArrayList<>();
+//            Message newMessage = new Message();
+//            newMessage.setBody(getString(R.string.invitation_group));
+//            newMessage.setAttachmentType(AttachmentTypes.NONE_NOTIFICATION);
+//            newMessage.setAttachment(null);
+//            newGroupForwardList.add(newMessage);
+//            openChat(ChatActivity.newIntent(mContext, newGroupForwardList, chat), userImage);
+//        } else {
+//            openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), userImage);
+//        }
     }
 
     @Override
@@ -614,7 +613,8 @@ public class MainActivityOld extends BaseActivity implements ChatItemClickListen
                         drawerLayout.openMenu(true);
                         break;
                     case 1:
-                        GroupCreateDialogFragment.newInstance(userMe, myUsers).show(getSupportFragmentManager(), GROUP_CREATE_TAG);
+//                        GroupCreateDialogFragment.newInstance(userMe, myUsers).show(getSupportFragmentManager(), GROUP_CREATE_TAG);
+                        drawerLayout.openMenu(true);
                         break;
                 }
                 break;
@@ -688,6 +688,11 @@ public class MainActivityOld extends BaseActivity implements ChatItemClickListen
     }
 
     @Override
+    public void makeFav(boolean callIsVideo, User user) {
+
+    }
+
+    @Override
     public void onUserGroupSelectDialogDismiss(ArrayList<User> users) {
         messageForwardList.clear();
 //        if (helper.getSharedPreferenceHelper().getBooleanPreference(Helper.GROUP_CREATE, false)) {
@@ -698,7 +703,7 @@ public class MainActivityOld extends BaseActivity implements ChatItemClickListen
 
     @Override
     public void selectionDismissed() {
-        //do nothing..
+
     }
 
     private void myUsersResult(ArrayList<User> myUsers) {

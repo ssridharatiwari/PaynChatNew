@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/logo"
+        android:visibility="gone"
         app:tint="#99000000" />
 
     <View
@@ -169,5 +170,6 @@
                 android:src="@drawable/ic_mic_white_24dp" />
         </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

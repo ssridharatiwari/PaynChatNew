@@ -29,15 +29,15 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/five"
             android:layout_marginLeft="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:fontFamily="@font/ubuntu_bold"
             android:foregroundGravity="center"
             android:gravity="center"
             android:paddingLeft="@dimen/five"
-            android:fontFamily="@font/ubuntu_bold"
             android:paddingTop="@dimen/three"
             android:paddingRight="@dimen/five"
             android:paddingBottom="@dimen/three"
@@ -60,11 +60,20 @@
 
         <ImageView
             android:id="@+id/verify_img"
-            android:layout_width="@dimen/twenty"
-            android:layout_margin="@dimen/five"
+            android:layout_width="@dimen/five"
             android:layout_height="@dimen/twenty"
             android:layout_alignParentRight="true"
-            android:src="@drawable/verified" />
+            android:src="@drawable/verified"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/user_fav"
+            android:layout_width="@dimen/twentyfive"
+            android:layout_height="@dimen/twentyfive"
+            android:layout_marginTop="@dimen/three"
+            android:layout_toLeftOf="@+id/verify_img"
+            android:scaleType="fitXY"
+            android:src="@drawable/fav_unselected" />
 
         <FrameLayout
             android:id="@+id/optionContainer"
@@ -119,19 +128,17 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
                 android:layout_gravity="bottom"
-                android:src="@drawable/audio_call_btn_front" />
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/audio_call_btn_front"
+                android:visibility="gone" />
+
 
             <ImageView
                 android:id="@+id/img_call"
                 android:layout_width="@dimen/forty"
-                android:layout_height="@dimen/forty"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:src="@drawable/video_call_btn_front" />
+                android:layout_height="@dimen/fortyfive"
+                android:src="@drawable/video_call_main" />
 
             <ImageView
                 android:id="@+id/img_chat"
@@ -139,15 +146,17 @@
                 android:layout_height="@dimen/thirtyfive"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="bottom"
                 android:layout_centerVertical="true"
-                android:src="@drawable/chat_btn"/>
+                android:layout_gravity="bottom"
+                android:src="@drawable/chat_btn"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/twohundredfifty"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:background="#26DF314D"
             android:foregroundGravity="center" />
 

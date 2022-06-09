@@ -23,8 +23,8 @@
     <string name="otp_txt_resendcode">RESEND CODE</string>
     <string name="otp_btn_continue">CONTINUE</string>
 
-    <string name="razorpay_key_id">rzp_test_7t5gbeWXEtLnbE</string>
-    <string name="razorpay_key_secret">LlozEbl1q26icJhnyDyRvfN6</string>
+    <string name="razorpay_key_id">rzp_test_S5rXx5qHjSsRmN</string>
+    <string name="razorpay_key_secret">WilPNRmcFlvlRYFZzCTDT4xe</string>
 
     <string name="button_allow" tools:keep="@string/button_allow">Allow</string>
     <string name="button_deny" tools:keep="@string/button_deny">Deny</string>

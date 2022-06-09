@@ -13,6 +13,7 @@ public class GlobalVariables {
     public static final String SUBSCRIBE_PACKAGE = "subscribe-api.php";
     public static final String SUBSCRIPTION_FETCH = "subscription-fetch-api.php";
     public static final String GETCONSELLORLIST = "counsellors-api.php";
+    public static final String GETWISHLISTCONSELLORLIST = "fav_counsellors-api.php";
     public static final String GETPLANS = "plans.php";
     public static final String UPDATEUSER = "update-user.php";
     public static final String UPDATECOUNSELLOR = "update-counsellor.php";
@@ -30,5 +31,6 @@ public class GlobalVariables {
     public static final String GETAPPOINTMENTS = "tasks-by-counsellor-id-api.php";
 
     public static final String ADDTRANSCATION = "transaction.php";
-    public static final String ADDTRANSCATIONEVERYSECOND = "transaction.php";
+    public static final String ADDTRANSCATIONEVERYSECOND = "transaction_second.php";
+    public static final String MAKEWISHLIST = "make_wishlist.php";
 }

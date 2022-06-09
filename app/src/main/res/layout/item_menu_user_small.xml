@@ -246,6 +246,24 @@
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="@dimen/five"
+            android:visibility="gone"
+            android:paddingBottom="@dimen/five">
+
+            <ImageView
+                android:id="@+id/user_fav"
+                android:layout_width="@dimen/thirtyfive"
+                android:layout_height="@dimen/thirtyfive"
+                android:scaleType="fitXY"
+                android:src="@drawable/fav_unselected" />
+        </LinearLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

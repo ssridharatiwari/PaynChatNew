@@ -263,4 +263,9 @@ public class CounsellersActivity extends BaseActivity implements ChatItemClickLi
             ActivityCompat.requestPermissions(this, permissionsSinch, 69);
         }
     }
+
+    @Override
+    public void makeFav(boolean callIsVideo, User user) {
+
+    }
 }

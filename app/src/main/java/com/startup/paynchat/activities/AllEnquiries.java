@@ -322,7 +322,7 @@ public class AllEnquiries extends BaseActivity implements ChatItemClickListener,
         StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.UPDATCOUNSELLORSTATUS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("response===e=======>>>>>", response);
+                Log.d("response===e=====>>>>>", response);
                 try {
                     JSONObject json = new JSONObject(response);
                     String str_message = json.getString("message");
@@ -618,6 +618,11 @@ public class AllEnquiries extends BaseActivity implements ChatItemClickListener,
         } else {
             ActivityCompat.requestPermissions(this, permissionsSinch, 69);
         }
+    }
+
+    @Override
+    public void makeFav(boolean callIsVideo, User user) {
+
     }
 
 //    private void myUsersResult(ArrayList<User> myUsers) {

@@ -171,13 +171,14 @@ public class MenuUsersRecyclerAdapter extends RecyclerView.Adapter<MenuUsersRecy
     }
 
     class UsersViewHolder extends BaseViewHolder {
-        private ImageView userImage;
+        private ImageView userImage, imgFavaraite;
         private TextView userName, userRole;
         private ImageView callAudio, callVideo, chatToUser;
 
         UsersViewHolder(final View itemView) {
             super(itemView);
             userImage = itemView.findViewById(R.id.user_image);
+            imgFavaraite = itemView.findViewById(R.id.user_fav);
             userName = itemView.findViewById(R.id.user_name);
             userRole = itemView.findViewById(R.id.user_role);
 
@@ -185,28 +186,33 @@ public class MenuUsersRecyclerAdapter extends RecyclerView.Adapter<MenuUsersRecy
             callVideo = itemView.findViewById(R.id.img_call);
             chatToUser = itemView.findViewById(R.id.img_chat);
 
-            callAudio.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    itemClickListener.onCallChat(false, userMe);
-                }
+
+
+            callAudio.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                itemClickListener.onCallChat(false, userMe);
             });
 
-            callVideo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    itemClickListener.onCallChat(true, userMe);
-                }
+            callVideo.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                itemClickListener.onCallChat(true, userMe);
             });
 
-            chatToUser.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    itemClickListener.onMessageChat(new Chat(dataListFiltered.get(pos), userMe.getId()), pos, userImage);
+            imgFavaraite.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (dataListFiltered.get(pos).isFavaraite()){
+                    Glide.with(context).load(R.drawable.fav_unselected).apply(new RequestOptions().placeholder(R.drawable.fav_unselected)).into((ImageView)v);
+                    dataListFiltered.get(pos).setFavaraite(false);
+                }else {
+                    Glide.with(context).load(R.drawable.fav_selected).apply(new RequestOptions().placeholder(R.drawable.fav_selected)).into((ImageView)v);
+                    dataListFiltered.get(pos).setFavaraite(true);
                 }
+                itemClickListener.makeFav(true, userMe);
+            });
+
+            chatToUser.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                itemClickListener.onMessageChat(new Chat(dataListFiltered.get(pos), userMe.getId()), pos, userImage);
             });
 
             itemView.setOnClickListener(v -> {
@@ -225,6 +231,11 @@ public class MenuUsersRecyclerAdapter extends RecyclerView.Adapter<MenuUsersRecy
         }
 
         public void setData(User user) {
+            if (user.isFavaraite()) {
+                Glide.with(context).load(R.drawable.fav_selected).apply(new RequestOptions().placeholder(R.drawable.fav_unselected)).into(imgFavaraite);
+            }else{
+                Glide.with(context).load(R.drawable.fav_unselected).apply(new RequestOptions().placeholder(R.drawable.fav_unselected)).into(imgFavaraite);
+            }
             userName.setText(user.getName());
             userRole.setText(user.getRole());
             Glide.with(context).load(user.getImage()).apply(new RequestOptions().placeholder(R.drawable.girl)).into(userImage);

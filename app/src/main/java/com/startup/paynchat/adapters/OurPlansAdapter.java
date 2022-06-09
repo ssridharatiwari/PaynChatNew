@@ -1,27 +1,20 @@
 package com.startup.paynchat.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.startup.paynchat.R;
-import com.startup.paynchat.activities.ViewPlansActivity;
 import com.startup.paynchat.models.PlansItemsModel;
-import com.startup.paynchat.models.PlansModel;
 
 import java.util.List;
 
 public class OurPlansAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<PlansItemsModel> items;
     private Context ctx;
-
+    private int checkedPosition = 0;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
