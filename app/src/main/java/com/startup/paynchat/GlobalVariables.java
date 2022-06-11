@@ -1,8 +1,8 @@
 package com.startup.paynchat;
 
 public class GlobalVariables {
-    public static final String PREURL = "http://paynchat.aaliyasaifi.in/api/";
-    public static final String IMGPREURL = "http://paynchat.aaliyasaifi.in/";
+    public static final String PREURL = "https://paynchat.online/admin/api/";
+    public static final String IMGPREURL = "https://paynchat.online/admin/";
 
     public static final String USERAUTOLOGIN = "auto-login-api.php";
     public static final String USERSIGNUP = "user-signup-api.php";

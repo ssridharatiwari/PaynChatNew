@@ -360,7 +360,6 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
                 mCallDuration.setText(formatTimespan(call.getDetails().getDuration()));
             }
 
-
             if (mCallDurationSecond % 60 == 5) {
                 DeductAmount(GlobalVariables.ADDTRANSCATIONEVERYSECOND, "1");
             }
@@ -370,12 +369,7 @@ public class CallScreenActivity extends BaseActivity implements SensorEventListe
     private boolean isCallAPi = true;
     private void DeductAmount(String POSTURL, String duration) {
         final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                isCallAPi = true;
-            }
-        }, 3000);
+        handler.postDelayed(() -> isCallAPi = true, 3000);
 
         if (isCallAPi) {
             isCallAPi = false;
