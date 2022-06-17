@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/forty"
                     android:layout_marginTop="@dimen/spacing_xlarge"
-                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/edittextstyle"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -126,6 +126,25 @@
 
                         <requestFocus />
                     </com.google.android.material.textfield.TextInputEditText>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/forty"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chk_accept"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textColorLink="#C36241" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton

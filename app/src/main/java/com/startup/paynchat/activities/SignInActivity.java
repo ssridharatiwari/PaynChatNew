@@ -7,21 +7,32 @@ import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.startup.paynchat.GlobalVariables;
 import com.startup.paynchat.R;
+import com.startup.paynchat.WebViewActivity;
 import com.startup.paynchat.models.Country;
 import com.startup.paynchat.utils.Helper;
 import com.startup.paynchat.utils.KeyboardUtil;
+import com.startup.paynchat.utils.PreferenceConnector;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +49,7 @@ public class SignInActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Context context;
     private Helper helper;
+    private CheckBox chkAccept;
 
     @Override
     protected void onPause() {
@@ -59,7 +71,8 @@ public class SignInActivity extends AppCompatActivity {
         spinnerCountryCodes = findViewById(R.id.countryCode);
         etPhone = findViewById(R.id.phoneNumber);
         edname = findViewById(R.id.edname);
-
+        chkAccept = findViewById(R.id.chk_accept);
+        customTextView(chkAccept);
         setupCountryCodes();
         findViewById(R.id.submit).setOnClickListener(view -> {
             submit();
@@ -135,6 +148,10 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.validation_req_phone, Toast.LENGTH_LONG).show();
             return;
         }
+        if (!chkAccept.isChecked()) {
+            Toast.makeText(this, R.string.accept_terms, Toast.LENGTH_LONG).show();
+            return;
+        }
         final String phoneNumber = ((Country) spinnerCountryCodes.getSelectedItem()).getDialCode() + etPhone.getText().toString().replaceAll("\\s+", "");
         if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
             Toast.makeText(this, R.string.validation_req_phone_valid, Toast.LENGTH_LONG).show();
@@ -156,5 +173,34 @@ public class SignInActivity extends AppCompatActivity {
             dialogInterface.dismiss();
         });
         builder.create().show();
+    }
+
+    private void customTextView(TextView view) {
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder(
+                "I agree to the ");
+        spanTxt.append("Term of services");
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                PreferenceConnector.writeString(context, PreferenceConnector.WEBHEADING, "");
+                PreferenceConnector.writeString(context, PreferenceConnector.WEBURL, GlobalVariables.TERMSCONDITION);
+
+                startActivity(new Intent(context, WebViewActivity.class));
+            }
+        }, spanTxt.length() - "Term of services".length(), spanTxt.length(), 0);
+        spanTxt.append(" and");
+        spanTxt.setSpan(new ForegroundColorSpan(Color.BLACK), 32, spanTxt.length(), 0);
+        spanTxt.append(" Privacy Policy");
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                PreferenceConnector.writeString(context, PreferenceConnector.WEBHEADING, "");
+                PreferenceConnector.writeString(context, PreferenceConnector.WEBURL, GlobalVariables.PRIVACYPOLICY);
+
+                startActivity(new Intent(context, WebViewActivity.class));
+            }
+        }, spanTxt.length() - " Privacy Policy".length(), spanTxt.length(), 0);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
     }
 }

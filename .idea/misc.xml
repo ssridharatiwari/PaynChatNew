@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/drawable/back_button_dark.xml" value="0.234" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/drawable/edittextstyle.xml" value="0.222" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/act_webview.xml" value="0.34564102564102567" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/activity_counsellingform.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/activity_signin.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/content_main_old.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/fragment_options.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/fragment_privacy.xml" value="0.35104166666666664" />
+        <entry key="..\:/Android Codes/Native Codes/KS Codes/PayNChat/PaynChatNew/app/src/main/res/layout/include_actionbar.xml" value="0.35104166666666664" />
         <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_background.xml" value="0.281" />
         <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_background_light.xml" value="0.281" />
         <entry key="..\:/Android Codes/Native Codes/KS Codes/PaynChat/app/src/main/res/drawable/back_button.xml" value="0.281" />

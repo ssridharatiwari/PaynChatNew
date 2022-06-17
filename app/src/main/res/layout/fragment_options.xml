@@ -135,7 +135,6 @@
                 <TextView
                     android:id="@+id/counselling_his"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:drawableEnd="@drawable/ic_keyboard_arrow_right_white_24dp"
@@ -143,7 +142,8 @@
                     android:paddingRight="4dp"
                     android:text="View History"
                     android:textColor="@color/textColor4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/purchaseplan"
@@ -196,6 +196,18 @@
                     android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right_white_24dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="@string/contact_us"
+                    android:textColor="@color/textColor4"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,14 +220,14 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/contact"
+                    android:id="@+id/deleteaccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:drawableEnd="@drawable/ic_keyboard_arrow_right_white_24dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
-                    android:text="@string/contact_us"
+                    android:text="@string/delete_account"
                     android:textColor="@color/textColor4"
                     android:textSize="16sp" />
 
@@ -232,36 +244,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>
-
-        <TextView
-            android:id="@+id/actionBuy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/adView"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="24dp"
-            android:background="@drawable/rounded_primary_buy"
-            android:drawableStart="@drawable/ic_shopping_cart_white"
-            android:drawablePadding="4dp"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="8dp"
-            android:text="@string/buy_app"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <!--        <com.google.android.gms.ads.AdView xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--            xmlns:ads="http://schemas.android.com/apk/res-auto"-->
-        <!--            android:id="@+id/adView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentBottom="true"-->
-        <!--            ads:adSize="SMART_BANNER"-->
-        <!--            ads:adUnitId="@string/ad_unit_id1" />-->
 
     </RelativeLayout>
 

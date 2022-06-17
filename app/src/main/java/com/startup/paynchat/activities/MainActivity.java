@@ -125,7 +125,6 @@ public class MainActivity extends BaseActivity implements ChatItemClickListener,
                 Log.d("res=LoginUser==>", response);
                 try {
                     JSONObject json = new JSONObject(response);
-
                     String str_result = json.getString("result");
 
                     if (str_result.equalsIgnoreCase("true")) {
@@ -206,7 +205,6 @@ public class MainActivity extends BaseActivity implements ChatItemClickListener,
                 mAdapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, CategoryModel obj, int position) {
-
 //                        Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
 //                        intent.putExtra("serviceid", obj.getId());
 //                        intent.putExtra("servicename", obj.getCategory());

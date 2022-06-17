@@ -1,23 +1,31 @@
 package com.startup.paynchat.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.startup.paynchat.BuildConfig;
+import com.startup.paynchat.GlobalVariables;
 import com.startup.paynchat.R;
+import com.startup.paynchat.WebViewActivity;
 import com.startup.paynchat.activities.SignInActivity;
 import com.startup.paynchat.activities.UseHistoryActivity;
 import com.startup.paynchat.activities.ViewPlansActivity;
@@ -26,6 +34,12 @@ import com.startup.paynchat.services.SinchService;
 import com.startup.paynchat.utils.ConfirmationDialogFragment;
 import com.startup.paynchat.utils.Helper;
 import com.startup.paynchat.utils.PreferenceConnector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by a_man on 01-01-2018.
@@ -36,7 +50,7 @@ public class OptionsFragment extends BaseFullDialogFragment {
     private static final String PRIVACY_TAG = "privacytag";
     private static final String PROFILE_EDIT_TAG = "profileedittag";
     private ImageView userImage;
-    private TextView userName, userStatus, actionBuy;
+    private TextView userName, userStatus;
     private Helper helper;
     private SinchService.SinchServiceInterface sinchServiceInterface;
 
@@ -47,7 +61,6 @@ public class OptionsFragment extends BaseFullDialogFragment {
         userImage = view.findViewById(R.id.userImage);
         userName = view.findViewById(R.id.userName);
         userStatus = view.findViewById(R.id.userStatus);
-        actionBuy = view.findViewById(R.id.actionBuy);
 
         helper = new Helper(getContext());
         setUserDetails(helper.getLoggedInUser());
@@ -74,7 +87,15 @@ public class OptionsFragment extends BaseFullDialogFragment {
         view.findViewById(R.id.share).setOnClickListener(view17 -> Helper.openShareIntent(getContext(), null, (getString(R.string.hey_there) + " " + getString(R.string.app_name) + "\n" + getString(R.string.download_now) + ": " + ("https://play.google.com/store/apps/details?id=" + getContext().getPackageName()))));
         view.findViewById(R.id.rate).setOnClickListener(view16 -> Helper.openPlayStore(getContext()));
         view.findViewById(R.id.contact).setOnClickListener(view15 -> Helper.openSupportMail(getContext()));
-        view.findViewById(R.id.privacy).setOnClickListener(view14 -> new PrivacyPolicyDialogFragment().show(getChildFragmentManager(), PRIVACY_TAG));
+        view.findViewById(R.id.privacy).setOnClickListener(view14 -> {
+            PreferenceConnector.writeString(getActivity(), PreferenceConnector.WEBHEADING, "");
+            PreferenceConnector.writeString(getActivity(), PreferenceConnector.WEBURL, GlobalVariables.PRIVACYPOLICY);
+            startActivity(new Intent(getActivity(), WebViewActivity.class));
+        });
+        view.findViewById(R.id.deleteaccount).setOnClickListener(view14 -> {
+            DeleteAccount();
+        });
+
         view.findViewById(R.id.logout).setOnClickListener(view13 -> {
             ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newConfirmInstance(getString(R.string.logout_title),
                     getString(R.string.logout_message), null, null,
@@ -98,16 +119,49 @@ public class OptionsFragment extends BaseFullDialogFragment {
         });
 
         if (BuildConfig.IS_DEMO) {
-            actionBuy.setVisibility(View.VISIBLE);
-            actionBuy.setOnClickListener(actionView -> {
-                if (!TextUtils.isEmpty(BuildConfig.DEMO_ACTION_LINK)) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.DEMO_ACTION_LINK)));
-                }
-            });
         }
 
         return view;
     }
+
+    private void DeleteAccount() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.DELETEACOOUNT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res=LoginUser==>", response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    String str_result = json.getString("result");
+
+                    if (str_result.equalsIgnoreCase("true")) {
+                        Toast.makeText(getActivity(), json.getString("message"), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), json.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", PreferenceConnector.readString(getActivity(), PreferenceConnector.LOGINEDUSERID, ""));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
 
     public void OpenPurchaseIntent() {
         Intent intent = new Intent(getActivity(), ViewPlansActivity.class);

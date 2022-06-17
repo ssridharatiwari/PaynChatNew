@@ -35,7 +35,6 @@ import com.startup.paynchat.interfaces.ChatItemClickListener;
 import com.startup.paynchat.models.Chat;
 import com.startup.paynchat.models.Message;
 import com.startup.paynchat.models.User;
-import com.startup.paynchat.utils.PreferenceConnector;
 
 import org.json.JSONArray;
 import org.json.JSONException;

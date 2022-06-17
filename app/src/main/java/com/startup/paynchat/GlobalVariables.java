@@ -29,8 +29,13 @@ public class GlobalVariables {
     public static final String STATUSCHANGE = "update-task-status-api.php";
     public static final String ADDAPPOINTMENT = "appointment-insert-api.php";
     public static final String GETAPPOINTMENTS = "tasks-by-counsellor-id-api.php";
+    public static final String DELETEACOOUNT = "deleteaccount.php";
 
     public static final String ADDTRANSCATION = "transaction.php";
     public static final String ADDTRANSCATIONEVERYSECOND = "transaction_second.php";
     public static final String MAKEWISHLIST = "make_wishlist.php";
+    public static final String TERMSCONDITION = "https://paynchat.online/terms.html";
+    public static final String PRIVACYPOLICY = "https://paynchat.online/privacy.html";
+    public static final String REFUNDPOLICY = "https://paynchat.online/refund.html";
+
 }

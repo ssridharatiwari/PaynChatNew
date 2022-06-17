@@ -19,6 +19,8 @@ public class PreferenceConnector {
     public static final String ENQSTATUS = "enqstatus";
     public static final String ISINTROSHOWED = "introstatus";
     public static final String WALLETBAL = "wallet_bal";
+    public static final String WEBHEADING = "webheading";
+    public static final String WEBURL = "weburl";
 
     public static void writeBoolean(Context context, String key, boolean value) {
         getEditor(context).putBoolean(key, value).commit();
