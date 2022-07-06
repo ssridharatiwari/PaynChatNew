@@ -21,6 +21,7 @@ public class PreferenceConnector {
     public static final String WALLETBAL = "wallet_bal";
     public static final String WEBHEADING = "webheading";
     public static final String WEBURL = "weburl";
+    public static final String ORDERID = "order_id";
 
     public static void writeBoolean(Context context, String key, boolean value) {
         getEditor(context).putBoolean(key, value).commit();

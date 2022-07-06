@@ -1,5 +1,7 @@
 package com.startup.paynchat.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.startup.paynchat.GlobalVariables;
 import com.startup.paynchat.R;
+import com.startup.paynchat.WebViewActivity;
 import com.startup.paynchat.adapters.OurPlansAdapter;
 import com.startup.paynchat.models.PlansItemsModel;
 import com.startup.paynchat.models.PlansModel;
@@ -32,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +47,14 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
     private boolean goBackToForm;
     private String subcatId;
     private String plan_id;
+    private Context svContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewplans);
         helper = new Helper(this);
-
+        svContext = this;
         initViews();
         LoadOurServices();
 
@@ -172,35 +177,190 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
     public void startPayment(PlansItemsModel model) {
         curModel = model;
         curAMount = curModel.getPrice().replace("/-", "");
-        String strRazorPayId = getString(R.string.razorpay_key_id);
-        String strRazorPayKey = getString(R.string.razorpay_key_secret);
-        Checkout co = new Checkout();
-        co.setKeyID(strRazorPayId);
-        if (strRazorPayId.length() == 0) {
-            Toast.makeText(this, "Razorpay Key Not Available", Toast.LENGTH_SHORT).show();
-        } else {
-            try {
-                JSONObject options = new JSONObject();
-                options.put("name", (helper.getLoggedInUser()).getName());
-                options.put("description", "Add Coins for " + (helper.getLoggedInUser()).getName());
-                options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-                options.put("currency", "INR");
-                options.put("amount", (Integer.parseInt(curAMount) * 100) + "");
-
-                JSONObject preFill = new JSONObject();
-                preFill.put("email", "");
-                preFill.put("contact", (helper.getLoggedInUser()).getId());
-
-                options.put("prefill", preFill);
-
-                co.open(this, options);
-            } catch (Exception e) {
-                Toast.makeText(this, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        }
+        StartUpiPayment(curAMount);
+//        String strRazorPayId = getString(R.string.razorpay_key_id);
+//        String strRazorPayKey = getString(R.string.razorpay_key_secret);
+//        Checkout co = new Checkout();
+//        co.setKeyID(strRazorPayId);
+//        if (strRazorPayId.length() == 0) {
+//            Toast.makeText(this, "Razorpay Key Not Available", Toast.LENGTH_SHORT).show();
+//        } else {
+//            try {
+//                JSONObject options = new JSONObject();
+//                options.put("name", (helper.getLoggedInUser()).getName());
+//                options.put("description", "Add Coins for " + (helper.getLoggedInUser()).getName());
+//                options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+//                options.put("currency", "INR");
+//                options.put("amount", (Integer.parseInt(curAMount) * 100) + "");
+//
+//                JSONObject preFill = new JSONObject();
+//                preFill.put("email", "");
+//                preFill.put("contact", (helper.getLoggedInUser()).getId());
+//
+//                options.put("prefill", preFill);
+//
+//                co.open(this, options);
+//            } catch (Exception e) {
+//                Toast.makeText(this, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                e.printStackTrace();
+//            }
+//        }
     }
 
+    @Override
+    public void onResume() {
+        if (isPaymentTried) {
+            String str_order_id = PreferenceConnector.readString(svContext, PreferenceConnector.ORDERID, "");
+            if (! str_order_id.equals("")) {
+                CheckPaymentStatus(str_order_id);
+                isPaymentTried = false;
+            }
+        }
+        super.onResume();
+    }
+
+    private void CheckPaymentStatus(String transId) {
+        RequestQueue queue = Volley.newRequestQueue(svContext);
+        StringRequest request = new StringRequest(Request.Method.POST, "https://merchant.upigateway.com/api/check_order_status",
+                response -> {
+                    Log.d("res=LoginUser==>", response);
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        String str_result = json.getString("status");
+                        if (str_result.equalsIgnoreCase("true")) {
+                            JSONObject logindetail_obj = json.getJSONObject("data");
+                            String str_status = logindetail_obj.getString("status");
+                            Toast.makeText(svContext, str_status, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(svContext, "Will update payment detail soon", Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (null != customeProgressDialog && customeProgressDialog.isShowing()) {
+                        customeProgressDialog.dismiss();
+                    }
+                }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("key", "fc139505-1132-4a0e-a296-f7d3c73322e9");
+                params.put("client_txn_id", transId);
+                params.put("txn_date", getcurrentDate());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    CustomeProgressDialog customeProgressDialog;
+    private static boolean isPaymentTried = false;
+    private void StartUpiPayment(String amountAdd){
+        customeProgressDialog = new CustomeProgressDialog(svContext, R.layout.lay_customprogessdialog);
+        TextView textView = (TextView) customeProgressDialog.findViewById(R.id.loader_showtext);
+        textView.setVisibility(View.GONE);
+
+        customeProgressDialog.setCancelable(false);
+        customeProgressDialog.show();
+
+        RequestQueue queue = Volley.newRequestQueue(svContext);
+        StringRequest request = new StringRequest(Request.Method.POST, "https://merchant.upigateway.com/api/create_order",
+                response -> {
+                    Log.d("res=LoginUser==>", response);
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        String str_result = json.getString("status");
+                        if (str_result.equalsIgnoreCase("true")) {
+                            JSONObject logindetail_obj = json.getJSONObject("data");
+
+                            PreferenceConnector.writeString(svContext, PreferenceConnector.ORDERID, logindetail_obj.getString("order_id"));
+                            String str_payment_url = logindetail_obj.getString("payment_url");
+
+                            isPaymentTried = true;
+                            Log.e("---code-url---", str_payment_url);
+                            Intent browserIntent = new Intent(svContext, WebViewActivity.class);
+
+                            PreferenceConnector.writeString(svContext, PreferenceConnector.WEBHEADING, "");
+                            PreferenceConnector.writeString(svContext, PreferenceConnector.WEBURL, str_payment_url);
+
+//                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(str_payment_url));
+                            startActivity(browserIntent);
+                        } else {
+                            Toast.makeText(svContext, json.getString("msg"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (null != customeProgressDialog && customeProgressDialog.isShowing()) {
+                        customeProgressDialog.dismiss();
+                    }
+                }, error -> Log.d("error", error.toString())) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("key", "fc139505-1132-4a0e-a296-f7d3c73322e9e");
+                params.put("client_txn_id", "Paynchat" + getDateTimeForLog());
+                params.put("amount", amountAdd);
+                params.put("p_info", "Paynchat ");
+                params.put("customer_name", PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDNAME, ""));
+                params.put("customer_email",  PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDEMAIL, ""));
+                params.put("customer_mobile", PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDPHONE, ""));
+                params.put("redirect_url", "");
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    public static String getDateTimeForLog() {
+        return getcurrentDate() + "_" + getFormatedcurrentTime();
+    }
+
+    public static String getcurrentDate() {
+        Calendar today = Calendar.getInstance();
+        int date = today.get(Calendar.DATE);
+        int month = today.get(Calendar.MONTH);
+        int year = today.get(Calendar.YEAR);
+
+        return year + "-" + (month >= 10 ? month : "0" + month) + "-" + (date >= 10 ? date : "0" + date) +
+                " " + getFormatedcurrentTime();
+    }
+
+    public static String getFormatedcurrentTime() {
+        Calendar today = Calendar.getInstance();
+        int hour = today.get(Calendar.HOUR);
+        int minute = today.get(Calendar.MINUTE);
+        int second 	= today.get(Calendar.SECOND);
+        int amorpm = today.get(Calendar.AM_PM);
+
+        String strAMORPM = "";
+        if (amorpm == 0) {
+            strAMORPM = "am";
+        } else {
+            strAMORPM = "pm";
+        }
+
+        if (hour == 0) {
+            hour = 12;
+        }
+
+        return (hour >= 10 ? hour : "0" + hour) + " " + (minute >= 10 ? minute : "0" + minute) + " " + second;
+    }
 
     @Override
     public void onPaymentSuccess(String s) {
