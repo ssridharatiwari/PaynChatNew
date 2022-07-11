@@ -42,7 +42,7 @@ public class ActivityIntro extends AppCompatActivity implements ViewPager.OnPage
         svContext = ActivityIntro.this;
         root = (ViewGroup) findViewById(R.id.activity_foster);
 
-        buttonSign = findViewById(R.id.tombolstar);
+
         buttonSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -81,7 +81,12 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
 
     private void LoadOurServices() {
         planModel = new ArrayList<>();
+        customeProgressDialog = new CustomeProgressDialog(svContext, R.layout.lay_customprogessdialog);
+        TextView textView = (TextView) customeProgressDialog.findViewById(R.id.loader_showtext);
+        textView.setVisibility(View.GONE);
 
+        customeProgressDialog.setCancelable(false);
+        customeProgressDialog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.GETPLANS, new Response.Listener<String>() {
             @Override
@@ -109,6 +114,10 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                     e.printStackTrace();
                 }
 
+                if (null != customeProgressDialog && customeProgressDialog.isShowing()) {
+                    customeProgressDialog.dismiss();
+                }
+
                 RecyclerView recyclerView = findViewById(R.id.rv_services);
                 recyclerView.setLayoutManager(new GridLayoutManager(ViewPlansActivity.this, 3));
                 OurPlansAdapter mAdapter = new OurPlansAdapter(ViewPlansActivity.this, plansItem);
@@ -127,7 +136,6 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         StringRequest request = new StringRequest(Request.Method.POST, GlobalVariables.PREURL + GlobalVariables.SUBSCRIBE_PACKAGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("response=====b====>>>>>", response);
                 try {
                     JSONObject json = new JSONObject(response);
                     String str_message = json.getString("message");
@@ -213,12 +221,34 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
             String str_order_id = PreferenceConnector.readString(svContext, PreferenceConnector.ORDERID, "");
             if (! str_order_id.equals("")) {
                 CheckPaymentStatus(str_order_id);
-                isPaymentTried = false;
+
             }
         }
         super.onResume();
     }
-
+//            "data": {
+//        "id": 66,
+//                "customer_vpa": "",
+//                "amount": 100,
+//                "client_txn_id": "abcd1234",
+//                "customer_name": "Jon Doe",
+//                "customer_email": "jondoe@gmail.com",
+//                "customer_mobile": "9876543210",
+//                "p_info": "Product Name",
+//                "upi_txn_id": "209876543210",
+//                "status": "success",
+//                "remark": "transaction successful",
+//                "udf1": "",
+//                "udf2": "",
+//                "udf3": "",
+//                "redirect_url": "http://google.com",
+//                "txnAt": "2022-01-15",
+//                "createdAt": "2022-01-15T14:43:30.000Z",
+//                "Merchant": {
+//            "name": "Merchant Name",
+//                    "upi_id": "Q1234XXXX@ybl"
+//        }
+//    }
     private void CheckPaymentStatus(String transId) {
         RequestQueue queue = Volley.newRequestQueue(svContext);
         StringRequest request = new StringRequest(Request.Method.POST, "https://merchant.upigateway.com/api/check_order_status",
@@ -230,11 +260,14 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                         if (str_result.equalsIgnoreCase("true")) {
                             JSONObject logindetail_obj = json.getJSONObject("data");
                             String str_status = logindetail_obj.getString("status");
-                            Toast.makeText(svContext, str_status, Toast.LENGTH_LONG).show();
+                            if (str_status.equals("success")) {
+                                Toast.makeText(svContext, logindetail_obj.getString("remark"), Toast.LENGTH_LONG).show();
+                                isPaymentTried = false;
+                                AddCoins();
+                            }
                         } else {
-                            Toast.makeText(svContext, "Will update payment detail soon", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(svContext,  json.getString("msg"), Toast.LENGTH_LONG).show();
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -245,15 +278,15 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("key", "fc139505-1132-4a0e-a296-f7d3c73322e9");
+                params.put("key", "92eb94ef-73c1-4605-9577-9a81d5a9dc1a");
                 params.put("client_txn_id", transId);
                 params.put("txn_date", getcurrentDate());
                 return params;
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -261,7 +294,8 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         queue.add(request);
     }
 
-    CustomeProgressDialog customeProgressDialog;
+    private String pay_user_txn_id;
+    private CustomeProgressDialog customeProgressDialog;
     private static boolean isPaymentTried = false;
     private void StartUpiPayment(String amountAdd){
         customeProgressDialog = new CustomeProgressDialog(svContext, R.layout.lay_customprogessdialog);
@@ -274,24 +308,21 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         RequestQueue queue = Volley.newRequestQueue(svContext);
         StringRequest request = new StringRequest(Request.Method.POST, "https://merchant.upigateway.com/api/create_order",
                 response -> {
-                    Log.d("res=LoginUser==>", response);
+                    Log.d("res=Upiresult==>", response);
                     try {
                         JSONObject json = new JSONObject(response);
                         String str_result = json.getString("status");
                         if (str_result.equalsIgnoreCase("true")) {
                             JSONObject logindetail_obj = json.getJSONObject("data");
 
-                            PreferenceConnector.writeString(svContext, PreferenceConnector.ORDERID, logindetail_obj.getString("order_id"));
+//                            PreferenceConnector.writeString(svContext, PreferenceConnector.ORDERID, logindetail_obj.getString("order_id"));
+                            PreferenceConnector.writeString(svContext, PreferenceConnector.ORDERID, pay_user_txn_id);
                             String str_payment_url = logindetail_obj.getString("payment_url");
 
                             isPaymentTried = true;
-                            Log.e("---code-url---", str_payment_url);
                             Intent browserIntent = new Intent(svContext, WebViewActivity.class);
-
                             PreferenceConnector.writeString(svContext, PreferenceConnector.WEBHEADING, "");
                             PreferenceConnector.writeString(svContext, PreferenceConnector.WEBURL, str_payment_url);
-
-//                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(str_payment_url));
                             startActivity(browserIntent);
                         } else {
                             Toast.makeText(svContext, json.getString("msg"), Toast.LENGTH_LONG).show();
@@ -305,20 +336,29 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
                 }, error -> Log.d("error", error.toString())) {
             @Override
             protected Map<String, String> getParams() {
+                String strName = PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDNAME, "");
+                if (strName.equals("")) {
+                    strName = "User_" + ((PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDPHONE, "")).replace("+", ""));
+                }
+                String strEmail = PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDEMAIL, "");
+                if (strEmail.equals("")) {
+                    strEmail = "userpaynchat@paynchat.online";
+                }
+                pay_user_txn_id = "PC" + getDateTimeForLog().replaceAll(" ", "");
                 Map<String, String> params = new HashMap<>();
-                params.put("key", "fc139505-1132-4a0e-a296-f7d3c73322e9e");
-                params.put("client_txn_id", "Paynchat" + getDateTimeForLog());
+                params.put("key", "92eb94ef-73c1-4605-9577-9a81d5a9dc1a");
+                params.put("client_txn_id", pay_user_txn_id);
                 params.put("amount", amountAdd);
                 params.put("p_info", "Paynchat ");
-                params.put("customer_name", PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDNAME, ""));
-                params.put("customer_email",  PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDEMAIL, ""));
-                params.put("customer_mobile", PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDPHONE, ""));
-                params.put("redirect_url", "");
+                params.put("customer_name", strName);
+                params.put("customer_email",  strEmail);
+                params.put("customer_mobile", PreferenceConnector.readString(svContext, PreferenceConnector.LOGINEDPHONE, "").replace("+91", ""));
+                params.put("redirect_url", "https://paynchat.online");
                 return params;
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
@@ -328,7 +368,7 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
     }
 
     public static String getDateTimeForLog() {
-        return getcurrentDate() + "_" + getFormatedcurrentTime();
+        return getStraightcurrentDate() + "_" + getStrightFormatedcurrentTime();
     }
 
     public static String getcurrentDate() {
@@ -337,11 +377,10 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         int month = today.get(Calendar.MONTH);
         int year = today.get(Calendar.YEAR);
 
-        return year + "-" + (month >= 10 ? month : "0" + month) + "-" + (date >= 10 ? date : "0" + date) +
-                " " + getFormatedcurrentTime();
+        return (date >= 10 ? date : "0" + date) + "-" + (month >= 10 ? month : "0" + month) + "-" + year;
     }
 
-    public static String getFormatedcurrentTime() {
+    public static String getCurrentTime() {
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
         int minute = today.get(Calendar.MINUTE);
@@ -360,6 +399,36 @@ public class ViewPlansActivity extends AppCompatActivity implements View.OnClick
         }
 
         return (hour >= 10 ? hour : "0" + hour) + " " + (minute >= 10 ? minute : "0" + minute) + " " + second;
+    }
+
+    public static String getStraightcurrentDate() {
+        Calendar today = Calendar.getInstance();
+        int date = today.get(Calendar.DATE);
+        int month = today.get(Calendar.MONTH);
+        int year = today.get(Calendar.YEAR);
+
+        return year + "" + (month >= 10 ? month : "0" + month) + "" + (date >= 10 ? date : "0" + date);
+    }
+
+    public static String getStrightFormatedcurrentTime() {
+        Calendar today = Calendar.getInstance();
+        int hour = today.get(Calendar.HOUR);
+        int minute = today.get(Calendar.MINUTE);
+        int second 	= today.get(Calendar.SECOND);
+        int amorpm = today.get(Calendar.AM_PM);
+
+        String strAMORPM = "";
+        if (amorpm == 0) {
+            strAMORPM = "am";
+        } else {
+            strAMORPM = "pm";
+        }
+
+        if (hour == 0) {
+            hour = 12;
+        }
+
+        return (hour >= 10 ? hour : "0" + hour) + "" + (minute >= 10 ? minute : "0" + minute) + "" + second;
     }
 
     @Override

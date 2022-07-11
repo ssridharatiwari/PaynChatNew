@@ -1,8 +1,11 @@
 package com.startup.paynchat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -14,15 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.asksira.webviewsuite.WebViewSuite;
 import com.startup.paynchat.utils.PreferenceConnector;
 
-public class WebViewActivity extends AppCompatActivity implements View.OnClickListener {
+public class WebViewActivity extends AppCompatActivity implements View.OnClickListener{
     private WebViewSuite webViewSuite;
     private ImageView imgBack;
     private TextView txtTitle;
+    private Context svContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_webview);
+        svContext = this;
 
         webViewSuite    = findViewById(R.id.webViewSuite);
         imgBack         = (ImageView) findViewById(R.id.img_back);
@@ -33,6 +38,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
         ProgressBar pDialog = new ProgressBar(this);
 
+        Log.e("---code-url---", PreferenceConnector.readString(this, PreferenceConnector.WEBURL, ""));
         webViewSuite.startLoading(PreferenceConnector.readString(this, PreferenceConnector.WEBURL, ""));
         webViewSuite.setCustomProgressBar(pDialog);
 
@@ -61,6 +67,10 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
                 if (url.contains("wa.me")) {
                     openWhatsApp();
                     onBackPressed();
+                }else if (url.contains("upi://pay?")) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(browserIntent);
+                    finish();
                 }else {
                     view.loadUrl(url);
                 }
@@ -70,7 +80,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void openWhatsApp() {
-        String smsNumber = "919116669453"; // E164 format without '+' sign
+        String smsNumber = "910000000000"; // E164 format without '+' sign
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
         sendIntent.putExtra(Intent.EXTRA_TEXT, "I want to know about your services.");
@@ -85,7 +95,6 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        int response;
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
@@ -95,10 +104,6 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
     private void onRefreshWebView() {
         webViewSuite.refresh();
-    }
-
-    private void LoadStaticData() {
-//        webViewSuite.startLoadData(data, mimeType, encoding);
     }
 
     @Override
