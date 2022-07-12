@@ -90,7 +90,7 @@ public class VerificationActivity extends AppCompatActivity {
             //verifyOtp(otpCode[0].getText().toString() + otpCode[1].getText().toString() + otpCode[2].getText().toString() + otpCode[3].getText().toString());
         });
 
-        if(phoneNumberInPrefs.equalsIgnoreCase("+918233338888")){
+        if(phoneNumberInPrefs.equalsIgnoreCase("+9182333888802")){
             login();
         }else{
             initiateAuth(phoneNumberInPrefs);

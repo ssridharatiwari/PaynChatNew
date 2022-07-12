@@ -20,7 +20,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.startup.paynchat.R;
 import com.startup.paynchat.adapters.AppIntroPagerAdapter;
 import com.startup.paynchat.utils.PreferenceConnector;
-
 import java.util.Objects;
 
 public class ActivityIntro extends AppCompatActivity implements ViewPager.OnPageChangeListener {
@@ -42,13 +41,7 @@ public class ActivityIntro extends AppCompatActivity implements ViewPager.OnPage
         svContext = ActivityIntro.this;
         root = (ViewGroup) findViewById(R.id.activity_foster);
 
-
-        buttonSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowLoginScreen();
-            }
-        });
+        buttonSign.setOnClickListener(view -> ShowLoginScreen());
 
         removeNotif();
         mViewPager = findViewById(R.id.viewpager);
